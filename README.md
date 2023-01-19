@@ -1,7 +1,7 @@
 # Phytoxigene_automated_analysis
 
 A.	SCOPE AND APPLICATION
-Trying Something NEW!
+
 1.	Walkthrough of steps to process qPCR results from WLE weekly samples using R-code.  No previous knowledge of R is required. The current version of code is limited to use with the Phytoxigene Total Cyanobacteria (Catalogue No: 205-0050) and Toxin (Catalogue No: 205-0051) assays.  
 
 B.	SUMMARY OF METHOD
