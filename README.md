@@ -72,19 +72,34 @@ Rows 7-8 : QC results for Total Cyanobacteria assay standard curve, NTC, gDNA ex
 
 Rows 10-11 : QC results for mcyE Toxin assay standard curve, NTC, gDNA extraction controls, and environmental samples. Periods “.” indicate that the measure passed, while “FAIL” identifies that there as at least one sample or set of samples that did not meet the specifications identified in the test.  
 
-Test 1	Checks every standard curve reaction to see if it is within 1 cycle threshold (CT) of the respective average master curve point
-	Identify outliers in standard curve
-Test 2	Performs modified Thompson Tau Test – addendum at end of SOP	
-Test 3	Checks every standard curve reaction to see if less than + 3 standard deviations from respective average master curve point	
-Test 4	Checks every standard curve reaction to see if greater than - 3 standard deviations from respective average master curve point	
-Test 5	Confirms CT of NTC is above 36. 	Identify amplification (contamination) in NTC
-Test 6	Confirms amplification is not greater than the limit of detection (100 copies per reaction). Determined by standard curve point NA015.  	Identify substantial amplification (contamination) in gDNA extraction control
-Test 7	Confirms confirm IAC from each sample does not deviate more than 1.5 cycle threshold from IAC of NTC
-	A sample IAC over 1.5 cycle threshold from the NTC IAC suggests inhibition
+**Test 1**	Checks every standard curve reaction to see if it is within 1 cycle threshold (CT) of the respective average master curve point
+Identify outliers in standard curve
+ 
+**Test 2**	Performs modified Thompson Tau Test – addendum at end of SOP	
 
-A sample IAC under 1.5 cycle threshold from the NTC IAC is unexpected
-Test 8	Checks every sample run in duplicate to confirm measures don’t differentiate beyond 0.5 cycle threshold (CT)	Identify disagreement between replicates
-Test 9	Checks every reaction to confirm it has a higher CT than the top point (NA026) calculated (average) for the master standard curve 	Confirms sample does not exceed upper bounds of master curve
+**Test 3**	Checks every standard curve reaction to see if less than + 3 standard deviations from respective average master curve point	
+
+**Test 4**	Checks every standard curve reaction to see if greater than - 3 standard deviations from respective average master curve point	
+
+**Test 5**	Confirms CT of NTC is above 36. 	
+Identify amplification (contamination) in NTC
+
+**Test 6**	Confirms amplification is not greater than the limit of detection (100 copies per reaction). Determined by standard curve point NA015.  	
+Identify substantial amplification (contamination) in gDNA extraction control
+
+**Test 7**	Confirms confirm IAC from each sample does not deviate more than 1.5 cycle threshold from IAC of NTC
+A sample IAC over 1.5 cycle threshold from the NTC IAC suggests inhibition
+A sample IAC under 1.5 cycle threshold from the NTC IAC is expected
+
+**Test 8**	Checks every sample run in duplicate to confirm measures don’t differentiate beyond 0.5 cycle threshold (CT)
+Identify disagreement between replicates
+
+**Test 9**	Checks every reaction to confirm it has a higher CT than the top point (NA026) calculated (average) for the master standard curve 	
+Confirms sample does not exceed upper bounds of master curve
+
+**Test 10**	Checks that the reaction is equal to or above the limit of detection for the assay (>=45 copies/reaction)
+
+**Test 11**	Checks that the reaction is equal to or above the limit of quantification for the assay (>=100 copies/reaction)
 
 Rows 13-14 : Total Cyanobacteria assay standard curve parameters generated from the standard curve reactions included in the processed run as well as previous runs (std_curve.csv; optional).  
 
