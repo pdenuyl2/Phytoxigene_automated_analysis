@@ -97,9 +97,9 @@ Identify disagreement between replicates
 **Test 9**	Checks every reaction to confirm it has a higher CT than the top point (NA026) calculated (average) for the master standard curve 	
 Confirms sample does not exceed upper bounds of master curve
 
-**Test 10**	Checks that the reaction is equal to or above the limit of detection for the assay (>=45 copies/reaction)
+**Test 10**	[only included in manual template] Checks that the reaction is equal to or above the limit of detection for the assay (>=45 copies/reaction)
 
-**Test 11**	Checks that the reaction is equal to or above the limit of quantification for the assay (>=100 copies/reaction)
+**Test 11**	[only included in manual template] Checks that the reaction is equal to or above the limit of quantification for the assay (>=100 copies/reaction)
 
 Rows 13-14 : Total Cyanobacteria assay standard curve parameters generated from the standard curve reactions included in the processed run as well as previous runs (std_curve.csv; optional).  
 
