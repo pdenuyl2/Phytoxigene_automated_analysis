@@ -16,7 +16,7 @@ library(dplyr)
 ######################START USER DEFINED VARIABLES######################
 
 #Set file (.csv) - sourced from "results" tab
-run_file <- 'results.csv'
+run_file <- '250502-PhytoxigeneToxin-SHARC23-1-1dash5-PD.csv'
 
 ###
 #The following variables are optional and should only be used if the value is consistent across all samples being processed
@@ -75,6 +75,14 @@ run_file_toxin_ntc <- filter(run_file, Target_Name == "Microcystin/Nodularin (mc
 run_file_toxin_excntrl <- filter(run_file, Target_Name == "Microcystin/Nodularin (mcyE/ndaF)" & Sample_Name == extraction_controls)
 run_file_toxin_unknown <- filter(run_file, Target_Name == "Microcystin/Nodularin (mcyE/ndaF)" & Task == "UNKNOWN" & !CT == "Undetermined")
 run_file_toxin_unknown_undetermined <- filter(run_file, Target_Name == "Microcystin/Nodularin (mcyE/ndaF)" & Task == "UNKNOWN" & CT == "Undetermined")
+
+#Separate standards, NTC, and samples (unknown) - sxtA Toxin gene Target
+run_file_sxta_stds <- filter(run_file, Target_Name == "Saxitoxin (SxtA)" & Task == "STANDARD")
+run_file_sxta_ntc <- filter(run_file, Target_Name == "Saxitoxin (SxtA)" & Task == "NTC" 
+                             | Target_Name == "Saxitoxin (SxtA)" & Sample_Name == "NTC")
+run_file_sxta_excntrl <- filter(run_file, Target_Name == "Saxitoxin (SxtA)" & Sample_Name == extraction_controls)
+run_file_sxta_unknown <- filter(run_file, Target_Name == "Saxitoxin (SxtA)" & Task == "UNKNOWN" & !CT == "Undetermined")
+run_file_sxta_unknown_undetermined <- filter(run_file, Target_Name == "Saxitoxin (SxtA)" & Task == "UNKNOWN" & CT == "Undetermined")
 
 #Load standard curve file 
 std_curve <- read.csv(file = 'std_curve.csv', na.strings=c("NA",""))
@@ -367,6 +375,7 @@ write.csv(
 tryCatch(run_file_total_unknown$CPR <- 10^((as.numeric(run_file_total_unknown$CT)-as.numeric(std_curve_total_intercept))/as.numeric(std_curve_total_slope)), warning=function(e){"NA"})
 
 #Calculate new CPR mean without omitted samples
+if (!is.null(run_file_total_unknown$CPR)) {
 new_means <- run_file_total_unknown %>% group_by(Sample_Name, Target_Name)  %>% summarise(value=mean(CPR))
 colnames(new_means)[colnames(new_means) == 'value'] <- 'CPR_mean'
 
@@ -395,6 +404,7 @@ tryCatch(test8_9_result <- run_file_total_unknown %>% select(Well_Position, Samp
 tryCatch(write.csv(
   test8_9_result, file='output/total/Tests/test8_9_result_total.csv', row.names=FALSE), error=function(e){"NA"})
 
+  }
 ######################################################################
 #Processing Stream - Total Cyanobacteria 16S rRNA gene Target - End#
 ######################################################################
@@ -679,15 +689,298 @@ tryCatch(write.csv(
 #Processing Stream - mcyE Toxin gene gene Target - End#
 ######################################################################
 
+######################################################################
+#Processing Stream - sxtA Toxin gene gene Target - Start#
+######################################################################
+#Ensure consistent formatting between std_curve files
+run_file_sxta_stds$Well<-as.character(run_file_sxta_stds$Well)
+run_file_sxta_stds$Well_Position<-as.character(run_file_sxta_stds$Well_Position)
+run_file_sxta_stds$Omit<-as.logical(run_file_sxta_stds$Omit)
+run_file_sxta_stds$Sample_Name<-as.character(run_file_sxta_stds$Sample_Name)
+run_file_sxta_stds$Target_Name<-as.character(run_file_sxta_stds$Target_Name)
+run_file_sxta_stds$Task<-as.character(run_file_sxta_stds$Task)
+run_file_sxta_stds$Reporter<-as.character(run_file_sxta_stds$Reporter)
+run_file_sxta_stds$Quencher<-as.character(run_file_sxta_stds$Quencher)
+run_file_sxta_stds$CT<-as.numeric(run_file_sxta_stds$CT)
+run_file_sxta_stds$Ct_Mean<-as.numeric(run_file_sxta_stds$Ct_Mean)
+run_file_sxta_stds$Ct_SD<-as.numeric(run_file_sxta_stds$Ct_SD)
+run_file_sxta_stds$Quantity<-as.character(run_file_sxta_stds$Quantity)
+run_file_sxta_stds$Quantity_Mean<-as.numeric(run_file_sxta_stds$Quantity_Mean)
+run_file_sxta_stds$Quantity_SD<-as.numeric(run_file_sxta_stds$Quantity_SD)
+run_file_sxta_stds$`Automatic_Ct Threshold`<-as.logical(run_file_sxta_stds$`Automatic_Ct Threshold`)
+run_file_sxta_stds$Ct_Threshold<-as.numeric(run_file_sxta_stds$Ct_Threshold)
+run_file_sxta_stds$Automatic_Baseline<-as.logical(run_file_sxta_stds$Automatic_Baseline)
+run_file_sxta_stds$Baseline_Start<-as.numeric(run_file_sxta_stds$Baseline_Start)
+run_file_sxta_stds$Baseline_End<-as.numeric(run_file_sxta_stds$Baseline_End)
+run_file_sxta_stds$Comments<-as.character(run_file_sxta_stds$Comments)
+run_file_sxta_stds$Y_Intercept<-as.numeric(run_file_sxta_stds$Y_Intercept)
+run_file_sxta_stds$`R(superscript_2)`<-as.numeric(run_file_sxta_stds$`R(superscript_2)`)
+run_file_sxta_stds$Slope<-as.numeric(run_file_sxta_stds$Slope)
+run_file_sxta_stds$Efficiency<-as.numeric(run_file_sxta_stds$Efficiency)
+run_file_sxta_stds$Amp_Score<-as.numeric(run_file_sxta_stds$Amp_Score)
+run_file_sxta_stds$Cq_Conf<-as.numeric(run_file_sxta_stds$Cq_Conf)
+
+#Get all samples together to create a master toxin std curve ,
+std_curve_sxta <- filter(std_curve, Target_Name == "Saxitoxin (SxtA)" & Task == "STANDARD")
+
+ifelse(is.na(std_curve_sxta[1,9]), 
+       std_curve_sxta_master <- run_file_sxta_stds,
+       std_curve_sxta_master <- bind_rows(run_file_sxta_stds, std_curve_sxta))
+
+#Add "Log Starting Quantity Machine" for standard curve generation
+#Generate new corresponding values and column
+std_curve_sxta_master$Log_starting_quantity_machine <- ifelse(grepl("NA026", std_curve_sxta_master$Sample_Name), 6, 
+                                                               ifelse(grepl("NA015", std_curve_sxta_master$Sample_Name), 5,
+                                                                      ifelse(grepl("NA014", std_curve_sxta_master$Sample_Name), 4,
+                                                                             ifelse(grepl("NA013", std_curve_sxta_master$Sample_Name), 3,
+                                                                                    ifelse(grepl("NA012", std_curve_sxta_master$Sample_Name), 2,"")))))
+
+#Make sure all appropriate values are numeric (sxta std curve) 
+std_curve_sxta_master$CT<-as.numeric(std_curve_sxta_master$CT)
+std_curve_sxta_master$Ct_Mean<-as.numeric(std_curve_sxta_master$Ct_Mean)
+std_curve_sxta_master$Ct_SD<-as.numeric(std_curve_sxta_master$Ct_SD)
+std_curve_sxta_master$Y_Intercept<-as.numeric(std_curve_sxta_master$Y_Intercept)
+std_curve_sxta_master$"R(superscript_2)"<-as.numeric(std_curve_sxta_master$"R(superscript_2)")
+std_curve_sxta_master$Slope<-as.numeric(std_curve_sxta_master$Slope)
+std_curve_sxta_master$Efficiency<-as.numeric(std_curve_sxta_master$Efficiency)
+std_curve_sxta_master$Log_starting_quantity_machine <- as.numeric(std_curve_sxta_master$Log_starting_quantity_machine)
+
+#Calculate and plot standard curve (sxta std curve)
+std_curve_plot_sxta <- ggplot(std_curve_sxta_master,
+                               aes(x=Log_starting_quantity_machine, y=CT)) +
+  geom_point(size = 5) +
+  geom_smooth(formula = y ~ x, method='lm', se=FALSE, color="black") +
+  theme_bw() + 
+  stat_poly_eq(aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~~~~")),
+               formula = y~x, size = 6,
+               parse = TRUE) +
+  labs(x = "Log Starting Quantity (Copies Per Reaction)", y = "Ct") +
+  scale_y_continuous(limits=c(0, 38), breaks = c(0,5,10,15,20,25,30,35))
+
+ggsave(std_curve_plot_sxta, height = 5, width = 5, path = "output/sxta", filename = "standard_curve_sxta.pdf", device = "pdf")
+
+#Calculate and test r-squared of sxta std curve
+std_curve_sxta_r2 <- tryCatch(summary(lm(CT ~ Log_starting_quantity_machine, data = std_curve_sxta_master))$r.squared, error=function(e){"NA"})
+std_curve_sxta_r2 <- tryCatch(as.numeric(std_curve_sxta_r2), warning=function(e){std_curve_sxta_r2 <- "NA"})
+std_curve_sxta_r2_test <- tryCatch(if(std_curve_sxta_r2>0.985) {
+  "."
+} else {
+  "FAIL"
+} , error=function(e){"NA"})
+std_curve_sxta_r2_test <- ifelse(std_curve_sxta_r2 == "NA", std_curve_sxta_r2_test <- "NA", std_curve_sxta_r2_test)
+
+#Calculate slope and intercept of sxta std curve
+std_curve_sxta_slope <- tryCatch(summary(lm(CT ~ Log_starting_quantity_machine, data = std_curve_sxta_master))$coefficients[2], error=function(e){"NA"})
+std_curve_sxta_intercept <- tryCatch(summary(lm(CT ~ Log_starting_quantity_machine, data = std_curve_sxta_master))$coefficients[1], error=function(e){"NA"})
+
+#Calculate and test efficiency of sxta std curve
+std_curve_sxta_efficiency <- tryCatch(((10^(-1/std_curve_sxta_slope))-1)*100, error=function(e){"NA"})
+std_curve_sxta_efficiency_test <- tryCatch(if(std_curve_sxta_efficiency>90 & std_curve_sxta_efficiency<110) {
+  "."
+} else {
+  "FAIL"
+} , error=function(e){"NA"})
+std_curve_sxta_efficiency_test <- ifelse(std_curve_sxta_efficiency == "NA", std_curve_sxta_efficiency_test <- "NA", std_curve_sxta_efficiency_test)
+
+#Standard curve outlier check (tests 1-4)
+#Create n_tau table
+n_tau = matrix(c(3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,15, 16, 17,
+                 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
+                 1.1511, 1.425, 1.5712, 1.6563, 1.711, 1.7491, 1.777, 1.7984, 1.8153, 1.829, 1.8403, 1.8498,
+                 1.8579, 1.8649, 1.871, 1.8764, 1.8811, 1.8853, 1.8891, 1.8926, 1.8957, 1.8985, 1.9011, 
+                 1.9035, 1.9057, 1.9078, 1.9096, 1.9114), ncol = 2, byrow=FALSE)
+colnames(n_tau) <- c("n", "tau")
+
+#Assign Tau to each sample based on (n) - Modified Thompson Tau - Test 2
+std_curve_points <- c("NA026", "NA015", "NA014", "NA013", "NA012")
+std_counts <- c()
+
+for (i in std_curve_points) {
+  std_counts[i] <- print(sum(std_curve_sxta_master$Sample_Name == i))
+} 
+std_counts <- as.matrix(std_counts)
+
+std_curve_sxta_master$n <- ifelse(grepl("NA026", std_curve_sxta_master$Sample_Name), std_counts[1], 
+                                   ifelse(grepl("NA015", std_curve_sxta_master$Sample_Name), std_counts[2],
+                                          ifelse(grepl("NA014", std_curve_sxta_master$Sample_Name), std_counts[3],
+                                                 ifelse(grepl("NA013", std_curve_sxta_master$Sample_Name), std_counts[4],
+                                                        ifelse(grepl("NA012", std_curve_sxta_master$Sample_Name), std_counts[5],"")))))
+
+std_curve_sxta_master$tau <- ifelse(grepl("3", std_curve_sxta_master$n), n_tau[1,2], 
+                                     ifelse(grepl("4", std_curve_sxta_master$n), n_tau[2,2],
+                                            ifelse(grepl("5", std_curve_sxta_master$n), n_tau[3,2],
+                                                   ifelse(grepl("6", std_curve_sxta_master$n), n_tau[4,2],
+                                                          ifelse(grepl("7", std_curve_sxta_master$n), n_tau[5,2],
+                                                                 ifelse(grepl("8", std_curve_sxta_master$n), n_tau[6,2],
+                                                                        ifelse(grepl("9", std_curve_sxta_master$n), n_tau[7,2],
+                                                                               ifelse(grepl("10", std_curve_sxta_master$n), n_tau[8,2],
+                                                                                      ifelse(grepl("11", std_curve_sxta_master$n), n_tau[9,2],
+                                                                                             ifelse(grepl("12", std_curve_sxta_master$n), n_tau[10,2],
+                                                                                                    ifelse(grepl("13", std_curve_sxta_master$n), n_tau[11,2],
+                                                                                                           ifelse(grepl("14", std_curve_sxta_master$n), n_tau[12,2],
+                                                                                                                  ifelse(grepl("15", std_curve_sxta_master$n), n_tau[13,2],
+                                                                                                                         ifelse(grepl("16", std_curve_sxta_master$n), n_tau[14,2],
+                                                                                                                                ifelse(grepl("17", std_curve_sxta_master$n), n_tau[15,2],
+                                                                                                                                       ifelse(grepl("18", std_curve_sxta_master$n), n_tau[16,2],
+                                                                                                                                              ifelse(grepl("19", std_curve_sxta_master$n), n_tau[17,2],
+                                                                                                                                                     ifelse(grepl("20", std_curve_sxta_master$n), n_tau[18,2],
+                                                                                                                                                            ifelse(grepl("21", std_curve_sxta_master$n), n_tau[19,2],
+                                                                                                                                                                   ifelse(grepl("22", std_curve_sxta_master$n), n_tau[20,2],
+                                                                                                                                                                          ifelse(grepl("23", std_curve_sxta_master$n), n_tau[21,2],
+                                                                                                                                                                                 ifelse(grepl("24", std_curve_sxta_master$n), n_tau[22,2],
+                                                                                                                                                                                        ifelse(grepl("25", std_curve_sxta_master$n), n_tau[23,2],
+                                                                                                                                                                                               ifelse(grepl("26", std_curve_sxta_master$n), n_tau[24,2],
+                                                                                                                                                                                                      ifelse(grepl("27", std_curve_sxta_master$n), n_tau[25,2],
+                                                                                                                                                                                                             ifelse(grepl("28", std_curve_sxta_master$n), n_tau[26,2],
+                                                                                                                                                                                                                    ifelse(grepl("29", std_curve_sxta_master$n), n_tau[27,2],
+                                                                                                                                                                                                                           ifelse(grepl("30", std_curve_sxta_master$n), n_tau[28,2],""))))))))))))))))))))))))))))
+
+
+
 ###############################################################
-# Print Summary - Total Cyanobacteria and mcyE Toxin Gene #
+# sxtA Toxin gene #
 ###############################################################
+# TESTS #
+#########
+#Std. curve outlier checks (test 1,2, 3, 4) - sxta Cyanobacteria
+#Calculate avg. ct all runs
+NA026_all_sxta_CT <- filter(std_curve_sxta_master, Sample_Name == "NA026") 
+NA015_all_sxta_CT <- filter(std_curve_sxta_master, Sample_Name == "NA015") 
+NA014_all_sxta_CT <- filter(std_curve_sxta_master, Sample_Name == "NA014") 
+NA013_all_sxta_CT <- filter(std_curve_sxta_master, Sample_Name == "NA013") 
+NA012_all_sxta_CT <- filter(std_curve_sxta_master, Sample_Name == "NA012") 
+
+std_curve_sxta_master$CT_avg_allruns <- ifelse(grepl("NA026", std_curve_sxta_master$Sample_Name), mean(as.numeric(NA026_all_sxta_CT$CT)), 
+                                                ifelse(grepl("NA015", std_curve_sxta_master$Sample_Name), mean(as.numeric(NA015_all_sxta_CT$CT)), 
+                                                       ifelse(grepl("NA014", std_curve_sxta_master$Sample_Name), mean(as.numeric(NA014_all_sxta_CT$CT)),
+                                                              ifelse(grepl("NA013", std_curve_sxta_master$Sample_Name), mean(as.numeric(NA013_all_sxta_CT$CT)),
+                                                                     ifelse(grepl("NA012", std_curve_sxta_master$Sample_Name), mean(as.numeric(NA012_all_sxta_CT$CT)),"")))))
+
+std_curve_sxta_master$Ct_SD_allruns <- ifelse(grepl("NA026", std_curve_sxta_master$Sample_Name), mean(as.numeric(NA026_all_sxta_CT$Ct_SD)), 
+                                               ifelse(grepl("NA015", std_curve_sxta_master$Sample_Name), mean(as.numeric(NA015_all_sxta_CT$Ct_SD)), 
+                                                      ifelse(grepl("NA014", std_curve_sxta_master$Sample_Name), mean(as.numeric(NA014_all_sxta_CT$Ct_SD)),
+                                                             ifelse(grepl("NA013", std_curve_sxta_master$Sample_Name), mean(as.numeric(NA013_all_sxta_CT$Ct_SD)),
+                                                                    ifelse(grepl("NA012", std_curve_sxta_master$Sample_Name), mean(as.numeric(NA012_all_sxta_CT$Ct_SD)),"")))))
+
+#Test1
+#abs(CT_avg_allruns-CT)<1.00 
+std_curve_sxta_master$Ct_Mean <- as.numeric(std_curve_sxta_master$Ct_Mean)
+std_curve_sxta_master$test1 <- abs(std_curve_sxta_master$Ct_Mean-std_curve_sxta_master$CT)
+tryCatch(for (i in 1:length(std_curve_sxta_master$test1)) {
+  std_curve_sxta_master$test1[i] <- ifelse(std_curve_sxta_master$test1[i]<1.00, ".","Fail")
+}, error=function(e){"NA"})
+
+#Test2
+#(CT_avg_allruns-CT)-(tau*Ct_SD_allruns)<0 
+std_curve_sxta_master$Ct_SD_allruns <- as.numeric(std_curve_sxta_master$Ct_SD_allruns)
+std_curve_sxta_master$test2 <- tryCatch(
+  ((std_curve_sxta_master$CT_avg_allruns-std_curve_sxta_master$CT)-
+     (std_curve_sxta_master$tau*std_curve_sxta_master$Ct_SD_allruns)),
+  error = function(e)
+    "-1000"
+)
+tryCatch(for (i in 1:length(std_curve_sxta_master$test2)) {
+  std_curve_sxta_master$test2[i] <- ifelse(std_curve_sxta_master$test2[i]<0, ".","FAIL")
+}, error=function(e){"NA"})
+
+#Test3
+#(CT_avg_allruns+(Ct_SD_allruns*3))>CT
+std_curve_sxta_master$test3 <- tryCatch((std_curve_sxta_master$Ct_Mean+
+                                            (std_curve_sxta_master$Ct_SD*3)), error=function(e){"NA"})
+tryCatch(for (i in 1:length(std_curve_sxta_master$test3)) {
+  std_curve_sxta_master$test3[i] <- ifelse(std_curve_sxta_master$test3[i]>std_curve_sxta_master$CT[i], ".","Fail")
+}, error=function(e){"NA"})
+
+#Test4
+#(CT_avg_allruns-(Ct_SD_allruns*3))<CT
+tryCatch(std_curve_sxta_master$test4 <- (std_curve_sxta_master$Ct_Mean-
+                                            (std_curve_sxta_master$Ct_SD*3)), error=function(e){"NA"})
+
+tryCatch(for (i in 1:length(std_curve_sxta_master$test4)) {
+  std_curve_sxta_master$test4[i] <- ifelse(std_curve_sxta_master$test4[i]<std_curve_sxta_master$CT[i], ".","Fail")
+}, error=function(e){"NA"})
+
+test1_4_results_sxta <- std_curve_sxta_master %>% select(Well_Position, Sample_Name, Target_Name, Task, CT, Ct_Mean, Ct_SD, Quantity, n, tau, CT_avg_allruns, Ct_SD_allruns, test1, test2, test3, test4) 
+
+write.csv(
+  test1_4_results_sxta, file='output/sxta/tests/test1_2_3_4_results_sxta.csv', row.names=FALSE)
+
+#NTC amplification check (test 5)
+tryCatch(for (i in 1:length(run_file_sxta_ntc$CT)) {
+  run_file_sxta_ntc$test5[i] <- ifelse(run_file_sxta_ntc$CT[i]>36, ".","FAIL")
+}, error=function(e){"NA"})
+
+tryCatch(test5_result_sxta <- run_file_sxta_ntc %>% select(Well_Position, Sample_Name, Target_Name, Task, CT, Ct_Mean, Ct_SD, test5), error=function(e){"NA"})
+
+tryCatch(write.csv(
+  test5_result_sxta, file='output/sxta/tests/test5_result_sxta.csv', row.names=FALSE), error=function(e){"NA"})
+
+#Extraction Blank Amplification Check (Test 6)
+tryCatch(for (i in 1:length(run_file_sxta_excntrl$CT)) {
+  run_file_sxta_excntrl$test6[i] <- ifelse(run_file_sxta_excntrl$CT[i]>as.numeric(NA012_all_sxta_CT$Ct_Mean[1]), ".","FAIL")
+}, error=function(e){"NA"})
+
+tryCatch(test6_result_sxta <- run_file_sxta_excntrl %>% select(Well_Position, Sample_Name, Target_Name, Task, CT, Ct_Mean, Ct_SD, test6), error=function(e){"NA"})
+
+tryCatch(write.csv(
+  test6_result_sxta, file='output/sxta/tests/test6_result_sxta.csv', row.names=FALSE), error=function(e){"NA"})
+
+#IAC Check (Test 7) - NA for sxta Assay
+
+#######################
+# SAMPLE CALCULATION #
+#######################
+# sxtA Toxin Gene #
+
+#Calculate copies per reaction (CPR) for each sample - no correction
+tryCatch(run_file_sxta_unknown$CPR <- 10^((as.numeric(run_file_sxta_unknown$CT)-as.numeric(std_curve_sxta_intercept))/as.numeric(std_curve_sxta_slope)), warning=function(e){"NA"})
+
+#Calculate new CPR mean without omitted samples
+tryCatch(new_means <- run_file_sxta_unknown %>% group_by(Sample_Name, Target_Name)  %>% summarise(value=mean(CPR)), error=function(e){"NA"})
+colnames(new_means)[colnames(new_means) == 'value'] <- 'CPR_mean'
+
+#Recombine data frames
+run_file_sxta_unknown <- merge(run_file_sxta_unknown, new_means, by=c("Sample_Name","Target_Name"))
+
+#Calculate sample mean for each CPR calculated
+tryCatch(sd_CPR <- run_file_sxta_unknown %>% group_by(Sample_Name) %>% summarise(value=sd(CPR)), error=function(e){"NA"})
+colnames(sd_CPR)[colnames(sd_CPR) == 'value'] <- 'Stdev_CPR'
+
+run_file_sxta_unknown <- merge(run_file_sxta_unknown, sd_CPR, by="Sample_Name")
+
+run_file_sxta_unknown$RSD <- abs(as.numeric(run_file_sxta_unknown$Stdev_CPR)/as.numeric(run_file_sxta_unknown$CPR))
+
+#Difference between replicates <0.5 CT (Test 8)
+tryCatch(for (i in 1:length(run_file_sxta_unknown$CT)) {
+  run_file_sxta_unknown$test8[i] <- ifelse(abs(as.numeric(run_file_sxta_unknown$Ct_Mean[i])-as.numeric(run_file_sxta_unknown$CT[i]))<0.25, ".","FAIL")
+}, error=function(e){"NA"})
+
+#Samples within limit of highest std curve (Test 9)
+tryCatch(for (i in 1:length(run_file_sxta_unknown$CT)) {
+  run_file_sxta_unknown$test9[i] <- ifelse(as.numeric(run_file_sxta_unknown$CT[i])>as.numeric(NA026_all_sxta_CT$Ct_Mean[1]), ".","FAIL")
+}, error=function(e){"NA"})
+tryCatch(test8_9_result_sxta <- run_file_sxta_unknown %>% select(Well_Position, Sample_Name, Target_Name, Task, CT, Ct_Mean, Ct_SD, CPR, CPR_mean, Stdev_CPR, RSD, test8, test9), error=function(e){"NA"})
+
+tryCatch(write.csv(
+  test8_9_result_sxta, file='output/sxta/Tests/test8_9_result_sxta.csv', row.names=FALSE), error=function(e){"NA"})
+
+
+######################################################################
+#Processing Stream - sxtA Toxin gene gene Target - End#
+######################################################################
+
+#################################################################
+# Print Summary - Total Cyanobacteria and mcyE/sxtA Toxin Genes #
+#################################################################
 std_curve_summary_total_headers <- c("R-squared", "Slope", "Y-intercept", "Efficiency")
 std_curve_summary_toxin_headers <- c("R-squared", "Slope", "Y-intercept", "Efficiency")
+std_curve_summary_sxta_headers <- c("R-squared", "Slope", "Y-intercept", "Efficiency")
 std_curve_summary_total_values <- c(std_curve_total_r2, std_curve_total_slope, std_curve_total_intercept, std_curve_total_efficiency)
 std_curve_summary_toxin_values <- c(std_curve_toxin_r2, std_curve_toxin_slope, std_curve_toxin_intercept, std_curve_toxin_efficiency)
+std_curve_summary_sxta_values <- c(std_curve_sxta_r2, std_curve_sxta_slope, std_curve_sxta_intercept, std_curve_sxta_efficiency)
 std_curve_total_summary <- rbind(std_curve_summary_total_headers, std_curve_summary_total_values)
 std_curve_toxin_summary <- rbind(std_curve_summary_toxin_headers, std_curve_summary_toxin_values)
+std_curve_sxta_summary <- rbind(std_curve_summary_sxta_headers, std_curve_summary_sxta_values)
 
 #Results summary: tests 1-4
 std_curve_outlier_tests_headers <- c("test1", "test2", "test3", "test4")
@@ -702,32 +995,44 @@ std_curve_outlier_tests_results_toxin <- c(ifelse(any(std_curve_toxin_master$tes
                                            ifelse(any(std_curve_toxin_master$test3=="FAIL") == "TRUE", "FAIL", "."),
                                            ifelse(any(std_curve_toxin_master$test4=="FAIL") == "TRUE", "FAIL", "."))
 
+std_curve_outlier_tests_results_sxta  <- c(ifelse(any(std_curve_sxta_master$test1=="FAIL") == "TRUE", "FAIL", "."),
+                                           ifelse(any(std_curve_sxta_master$test2=="FAIL") == "TRUE", "FAIL", "."),
+                                           ifelse(any(std_curve_sxta_master$test3=="FAIL") == "TRUE", "FAIL", "."),
+                                           ifelse(any(std_curve_sxta_master$test4=="FAIL") == "TRUE", "FAIL", "."))
+
 std_curve_total_master_test_summary <- rbind(std_curve_outlier_tests_headers, std_curve_outlier_tests_results_total)
 std_curve_toxin_master_test_summary <- rbind(std_curve_outlier_tests_headers, std_curve_outlier_tests_results_toxin)
+std_curve_sxta_master_test_summary <- rbind(std_curve_outlier_tests_headers, std_curve_outlier_tests_results_sxta)
 
 #Results summary: test 5
 run_file_ntc_test_header <- c("test5")
 
 tryCatch(run_file_total_ntc_result <- run_file_total_ntc %>% select(Sample_Name, test5), error=function(e){"NA"})
 tryCatch(run_file_toxin_ntc_result <- run_file_toxin_ntc %>% select(Sample_Name, test5), error=function(e){"NA"})
+tryCatch(run_file_sxta_ntc_result <- run_file_sxta_ntc %>% select(Sample_Name, test5), error=function(e){"NA"})
 
 tryCatch(run_file_total_ntc_summary <- ifelse(any(run_file_total_ntc_result$test5=="FAIL") == "TRUE", "FAIL", "."), error=function(e){"NA"})
 tryCatch(run_file_toxin_ntc_summary <- ifelse(any(run_file_toxin_ntc_result$test5=="FAIL") == "TRUE", "FAIL", "."), error=function(e){"NA"})
+tryCatch(run_file_sxta_ntc_summary <- ifelse(any(run_file_sxta_ntc_result$test5=="FAIL") == "TRUE", "FAIL", "."), error=function(e){"NA"})
 
 tryCatch(run_file_total_ntc_test_summary <- rbind(run_file_ntc_test_header, run_file_total_ntc_summary), error=function(e){"NA"})
 tryCatch(run_file_toxin_ntc_test_summary <- rbind(run_file_ntc_test_header, run_file_toxin_ntc_summary), error=function(e){"NA"})
+tryCatch(run_file_sxta_ntc_test_summary <- rbind(run_file_ntc_test_header, run_file_sxta_ntc_summary), error=function(e){"NA"})
 
 #Results summary: test 6
-run_file_total_excntrl_test_header <- c("test6")
+run_file_excntrl_test_header <- c("test6")
 tryCatch(run_file_total_excntrl_summary <- ifelse(any(run_file_total_excntrl$test6=="FAIL") == "TRUE", "FAIL", "."), error=function(e){"NA"})
 tryCatch(run_file_toxin_excntrl_summary <- ifelse(any(run_file_toxin_excntrl$test6=="FAIL") == "TRUE", "FAIL", "."), error=function(e){"NA"})
+tryCatch(run_file_sxta_excntrl_summary <- ifelse(any(run_file_sxta_excntrl$test6=="FAIL") == "TRUE", "FAIL", "."), error=function(e){"NA"})
 
-run_file_toxin_excntrl_test_header <- c("test6")
-tryCatch(run_file_total_excntrl_summary <- ifelse(any(run_file_total_excntrl$test6=="FAIL") == "TRUE", "FAIL", "."), error=function(e){"NA"})
-tryCatch(run_file_toxin_excntrl_summary <- ifelse(any(run_file_toxin_excntrl$test6=="FAIL") == "TRUE", "FAIL", "."), error=function(e){"NA"})
+#run_file_toxin_excntrl_test_header <- c("test6")
+#tryCatch(run_file_total_excntrl_summary <- ifelse(any(run_file_total_excntrl$test6=="FAIL") == "TRUE", "FAIL", "."), error=function(e){"NA"})
+#tryCatch(run_file_toxin_excntrl_summary <- ifelse(any(run_file_toxin_excntrl$test6=="FAIL") == "TRUE", "FAIL", "."), error=function(e){"NA"})
+#tryCatch(run_file_sxta_excntrl_summary <- ifelse(any(run_file_sxta_excntrl$test6=="FAIL") == "TRUE", "FAIL", "."), error=function(e){"NA"})
 
-tryCatch(run_file_total_excntrl_test_summary <- rbind(run_file_total_excntrl_test_header, run_file_total_excntrl_summary), error=function(e){"NA"})
-tryCatch(run_file_toxin_excntrl_test_summary <- rbind(run_file_toxin_excntrl_test_header, run_file_toxin_excntrl_summary), error=function(e){"NA"})
+tryCatch(run_file_total_excntrl_test_summary <- rbind(run_file_excntrl_test_header, run_file_total_excntrl_summary), error=function(e){"NA"})
+tryCatch(run_file_toxin_excntrl_test_summary <- rbind(run_file_excntrl_test_header, run_file_toxin_excntrl_summary), error=function(e){"NA"})
+tryCatch(run_file_sxta_excntrl_test_summary <- rbind(run_file_excntrl_test_header, run_file_sxta_excntrl_summary), error=function(e){"NA"})
 
 #Results summary: test 7
 run_file_iac_stds_unknown_test_header <- c("test7")
@@ -738,8 +1043,10 @@ tryCatch(run_file_iac_stds_unknown_summary <- ifelse(any(run_file_iac_stds_unkno
 tryCatch(run_file_iac_stds_unknown_test_summary <- rbind(run_file_iac_stds_unknown_test_header, run_file_iac_stds_unknown_summary), error=function(e){"NA"})
 
 run_file_iac_stds_unknown_result_toxin <- "NA"    
+run_file_iac_stds_unknown_result_sxta <- "NA"    
 
 run_file_iac_stds_unknown_test_summary_toxin <- rbind(run_file_iac_stds_unknown_test_header, run_file_iac_stds_unknown_result_toxin)
+run_file_iac_stds_unknown_test_summary_sxta <- rbind(run_file_iac_stds_unknown_test_header, run_file_iac_stds_unknown_result_sxta)
 
 #Results summary: test 8 and 9
 run_file_unknown_test_header <- c("test8", "test9")
@@ -761,6 +1068,14 @@ run_file_toxin_unknown_result <- c(ifelse(any(run_file_toxin_unknown$test8=="FAI
 
 run_file_toxin_unknown_test_summary <- rbind(run_file_unknown_test_header, run_file_toxin_unknown_result)
 
+#Change "NA" to "." for samples that are UNDETERMINED
+run_file_sxta_unknown$test8 <- gsub('NA', '.', run_file_sxta_unknown$test8)
+run_file_sxta_unknown$test9 <- gsub('NA', '.', run_file_sxta_unknown$test9)
+run_file_sxta_unknown_result <- c(ifelse(any(run_file_sxta_unknown$test8=="FAIL") == "TRUE", "FAIL", "."),
+                                   ifelse(any(run_file_sxta_unknown$test9=="FAIL") == "TRUE", "FAIL", "."))
+
+run_file_sxta_unknown_test_summary <- rbind(run_file_unknown_test_header, run_file_sxta_unknown_result)
+
 #Format row names
 row.names(std_curve_total_master_test_summary) <- c("Test", "result")
 tryCatch(row.names(run_file_total_ntc_test_summary) <- c("Test", "result"), error=function(e){"NA"})
@@ -771,14 +1086,19 @@ row.names(std_curve_toxin_master_test_summary) <- c("Test", "result")
 tryCatch(row.names(run_file_toxin_ntc_test_summary) <- c("Test", "result"), error=function(e){"NA"})
 row.names(run_file_total_unknown_test_summary) <- c("Test", "result")
 
+row.names(std_curve_sxta_master_test_summary) <- c("Test", "result")
+tryCatch(row.names(run_file_sxta_ntc_test_summary) <- c("Test", "result"), error=function(e){"NA"})
+row.names(run_file_sxta_unknown_test_summary) <- c("Test", "result")
+
 #############################
 #Summary of all test results#
 #############################
 tryCatch(all_test_summary_total <-cbind(std_curve_total_master_test_summary, run_file_total_ntc_test_summary, run_file_total_excntrl_test_summary, run_file_iac_stds_unknown_test_summary, run_file_total_unknown_test_summary), error=function(e){"NA"})
 tryCatch(all_test_summary_toxin <-cbind(std_curve_toxin_master_test_summary, run_file_toxin_ntc_test_summary, run_file_toxin_excntrl_test_summary, run_file_iac_stds_unknown_test_summary_toxin, run_file_toxin_unknown_test_summary), error=function(e){"NA"})
+tryCatch(all_test_summary_sxta  <-cbind(std_curve_sxta_master_test_summary, run_file_sxta_ntc_test_summary, run_file_sxta_excntrl_test_summary, run_file_iac_stds_unknown_test_summary_toxin, run_file_sxta_unknown_test_summary), error=function(e){"NA"})
 
 #Create empty vector 
-summary_output <- data.frame(matrix(ncol = 100, nrow = 100))
+summary_output <- data.frame(matrix(ncol = 1000, nrow = 1000))
 summary_output[is.na(summary_output)] <- ""
 
 #Print test 1-9 summary - Total Cyanobacteria
@@ -800,6 +1120,17 @@ replacement_headers <- c("test1", "test2", "test3", "test4", "test5", "test6", "
 ifelse(summary_output[10,2]=="", summary_output[10,2:10] <- replacement_headers, print("NA"))
 replacement_results <- c("NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA")
 ifelse(summary_output[11,2]=="", summary_output[11,2:10] <- replacement_results, print("NA"))
+
+#START HERE
+#Print test 1-9 summary - sxtA Toxin Gene
+tryCatch(summary_output[13:14,2:10] <- all_test_summary_sxta, error=function(e){"NA"})
+summary_output[13,1] <- "sxtA Toxin Gene Assay Test Results"
+
+#Add filler test 1-9 summary if sxtA Toxin Gene not used
+replacement_headers <- c("test1", "test2", "test3", "test4", "test5", "test6", "test7", "test8", "test9")
+ifelse(summary_output[13,2]=="", summary_output[13,2:10] <- replacement_headers, print("NA"))
+replacement_results <- c("NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA")
+ifelse(summary_output[14,2]=="", summary_output[14,2:10] <- replacement_results, print("NA"))
 
 #Summary of run/machine data
 #Calibration expired?
@@ -830,18 +1161,25 @@ summary_output[5,1] <- "Run Start Date"
 summary_output[5,2] <- date_summary
 
 #Standard curve summary - Total Cyanobacteria
-summary_output[13:14,2:5] <- std_curve_total_summary
-summary_output[13,1] <- "Total Cyanobacteria Assay Std. Curve Metrics"
+summary_output[16:17,2:5] <- std_curve_total_summary
+summary_output[16,1] <- "Total Cyanobacteria Assay Std. Curve Metrics"
 #Standard curve Pass/FAIL - Total Cyanobacteria
-summary_output[15,2] <- std_curve_total_r2_test
-summary_output[15,5] <- std_curve_total_efficiency_test
+summary_output[18,2] <- std_curve_total_r2_test
+summary_output[18,5] <- std_curve_total_efficiency_test
 
 #Standard curve summary - mcyE Toxin Gene
-summary_output[17:18,2:5] <- std_curve_toxin_summary
-summary_output[17,1] <- "mcyE Toxin Gene Assay Std. Curve Metrics"
+summary_output[20:21,2:5] <- std_curve_toxin_summary
+summary_output[20,1] <- "mcyE Toxin Gene Assay Std. Curve Metrics"
 #Standard curve Pass/FAIL - mcyE Toxin Gene
-summary_output[19,2] <- std_curve_toxin_r2_test
-summary_output[19,5] <- std_curve_toxin_efficiency_test
+summary_output[22,2] <- std_curve_toxin_r2_test
+summary_output[22,5] <- std_curve_toxin_efficiency_test
+
+#Standard curve summary - sxtA Toxin Gene
+summary_output[24:25,2:5] <- std_curve_sxta_summary
+summary_output[24,1] <- "sxtA Toxin Gene Assay Std. Curve Metrics"
+#Standard curve Pass/FAIL - sxtA Toxin Gene
+summary_output[26,2] <- std_curve_toxin_r2_test
+summary_output[26,5] <- std_curve_toxin_efficiency_test
 
 #Results: sample concentrations and stats 
 run_file_total_unknown_sample_results <- tryCatch(run_file_total_unknown %>% select(Well_Position, Sample_Name, Target_Name, CPR, CPR_mean, Stdev_CPR), error=function(e){"NA"})
@@ -853,14 +1191,23 @@ run_file_toxin_unknown_sample_results <- tryCatch(run_file_toxin_unknown %>% sel
 tryCatch(if(run_file_toxin_unknown_sample_results[1]=="NA") {
   run_file_toxin_unknown_sample_results <- run_file_toxin_unknown
   }, error=function(e){"NA"})
+
+run_file_sxta_unknown_sample_results <- tryCatch(run_file_sxta_unknown %>% select(Well_Position, Sample_Name, Target_Name, CPR, CPR_mean, Stdev_CPR), error=function(e){"NA"})
+tryCatch(if(run_file_sxta_unknown_sample_results[1]=="NA") {
+  run_file_sxta_unknown_sample_results <- run_file_sxta_unknown
+}, error=function(e){"NA"})
   
 run_file_unknown_sample_results_head <- c("Well_Position", "Sample_Name", "Target_Name", "CPR", "CPR_mean")
 run_file_unknown_sample_results_head_trim <- c("Sample_Name", "Target_Name", "CPR_mean", "Stdev_CPR")
 
-run_file_unknown_sample_results <- rbind(run_file_total_unknown_sample_results, run_file_toxin_unknown_sample_results)
+run_file_unknown_sample_results <- rbind(run_file_total_unknown_sample_results, run_file_toxin_unknown_sample_results, run_file_sxta_unknown_sample_results)
 run_file_unknown_sample_results %>% select(sort(names(.)))
 
-run_file_unknown_sample_results_trim <- run_file_unknown_sample_results[!duplicated(run_file_unknown_sample_results$Sample_Name), ]
+#THIS IS CAUSING AN ISSUE, Previously used base R - Prevents combination of undetermined below
+#run_file_unknown_sample_results_trim <- run_file_unknown_sample_results %>%
+#                                                    group_by(Target_Name) %>%
+#                                                    distinct(Sample_Name, .keep_all = TRUE)
+run_file_unknown_sample_results_trim <- run_file_unknown_sample_results[!duplicated(run_file_unknown_sample_results[c("Target_Name", "Sample_Name")]), ]
 run_file_unknown_sample_results_trim <- run_file_unknown_sample_results_trim %>% select(Sample_Name, Target_Name, CPR_mean, Stdev_CPR)
 run_file_unknown_sample_results_trim[,3:4] <- round(run_file_unknown_sample_results_trim[,3:4])
 
@@ -869,14 +1216,17 @@ run_file_total_unknown_undetermined_sub_trim <- tryCatch(run_file_total_unknown_
 names(run_file_total_unknown_undetermined_sub_trim) <- c("Sample_Name", "Target_Name", "CPR_mean", "Stdev_CPR")
 run_file_toxin_unknown_undetermined_sub_trim <- tryCatch(run_file_toxin_unknown_undetermined %>% select(Sample_Name, Target_Name, CT, Ct_SD), error=function(e){"NA"})
 names(run_file_toxin_unknown_undetermined_sub_trim) <- c("Sample_Name", "Target_Name", "CPR_mean", "Stdev_CPR")
+run_file_sxta_unknown_undetermined_sub_trim <- tryCatch(run_file_sxta_unknown_undetermined %>% select(Sample_Name, Target_Name, CT, Ct_SD), error=function(e){"NA"})
+names(run_file_sxta_unknown_undetermined_sub_trim) <- c("Sample_Name", "Target_Name", "CPR_mean", "Stdev_CPR")
 
-run_file_unknown_sample_results_trim <- rbind(run_file_unknown_sample_results_trim, run_file_total_unknown_undetermined_sub_trim, run_file_toxin_unknown_undetermined_sub_trim)
+#THIS IS THE ISSUE THAT HAS COME UP!
+run_file_unknown_sample_results_trim <- rbind(run_file_unknown_sample_results_trim, run_file_total_unknown_undetermined_sub_trim, run_file_toxin_unknown_undetermined_sub_trim, run_file_sxta_unknown_undetermined_sub_trim)
 
-insert_length <- dim(run_file_unknown_sample_results_trim)[1]+21
+insert_length <- dim(run_file_unknown_sample_results_trim)[1]+27
 insert_width <- dim(run_file_unknown_sample_results_trim)[2]
 
-summary_output[22:insert_length,1:insert_width] <- run_file_unknown_sample_results_trim
-summary_output[21, 1:insert_width] <- run_file_unknown_sample_results_head_trim
+summary_output[28:insert_length,1:insert_width] <- run_file_unknown_sample_results_trim
+summary_output[28, 1:insert_width] <- run_file_unknown_sample_results_head_trim
 
 run_file_unknown_sample_results[,4:6] <- round(run_file_unknown_sample_results[,4:6])
 
@@ -891,39 +1241,44 @@ run_file_toxin_unknown_undetermined_sub <- tryCatch(run_file_toxin_unknown_undet
 tryCatch(names(run_file_toxin_unknown_undetermined_sub) <- c("Well_Position", "Sample_Name", "Target_Name", "CPR", "CPR_mean", "Stdev_CPR"), error=function(e){"NA"})
 ifelse(run_file_toxin_unknown_undetermined_sub=="NA", run_file_toxin_unknown_undetermined_sub <- run_file_toxin_unknown_undetermined, print(""))
 
-run_file_unknown_sample_results <- rbind(run_file_unknown_sample_results, run_file_total_unknown_undetermined_sub, run_file_toxin_unknown_undetermined_sub)
+tryCatch(run_file_sxta_unknown_undetermined$blankVar <- "", error=function(e){"NA"})
+run_file_sxta_unknown_undetermined_sub <- tryCatch(run_file_sxta_unknown_undetermined %>% select(Well_Position, Sample_Name, Target_Name, CT, blankVar, Ct_SD), error=function(e){"NA"})
+tryCatch(names(run_file_sxta_unknown_undetermined_sub) <- c("Well_Position", "Sample_Name", "Target_Name", "CPR", "CPR_mean", "Stdev_CPR"), error=function(e){"NA"})
+ifelse(run_file_sxta_unknown_undetermined_sub=="NA", run_file_sxta_unknown_undetermined_sub <- run_file_sxta_unknown_undetermined, print(""))
+
+run_file_unknown_sample_results <- rbind(run_file_unknown_sample_results, run_file_total_unknown_undetermined_sub, run_file_toxin_unknown_undetermined_sub, run_file_sxta_unknown_undetermined_sub)
 run_file_unknown_sample_results %>% select(sort(names(.)))
 
 write.table(
   run_file_unknown_sample_results, file='output/Run_results.csv', row.names=FALSE, col.names=TRUE, sep=",")
 
 #Include column for template volume (uL)
-summary_output[21,6] <- "template_volume_uL"
-tryCatch(summary_output[22:insert_length,6] <- template_volume, error=function(e){"NA"})
+summary_output[28,6] <- "template_volume_uL"
+tryCatch(summary_output[29:insert_length,6] <- template_volume, error=function(e){"NA"})
 
 #Include column for elution volume (uL)
-summary_output[21,7] <- "elution_volume_uL"
-tryCatch(summary_output[22:insert_length,7] <- elution_volume, error=function(e){"NA"})
+summary_output[28,7] <- "elution_volume_uL"
+tryCatch(summary_output[29:insert_length,7] <- elution_volume, error=function(e){"NA"})
 
 #Include column for manual additions (dilution factor, volume filtered)
-summary_output[21,5] <- "dilution_factor"
-summary_output[21,8] <- "volume_filtered_mL"
+summary_output[28,5] <- "dilution_factor"
+summary_output[28,8] <- "volume_filtered_mL"
 
 #Include column for final calculation in excel
-summary_output[21,10] <- "FINAL Sample Value"
-summary_output[21,11] <- "FINAL Sample Stdev"
-summary_output[21,12] <- "Units"
-summary_output[22:insert_length,12] <- "copies per mL"
+summary_output[28,10] <- "FINAL Sample Value"
+summary_output[28,11] <- "FINAL Sample Stdev"
+summary_output[28,12] <- "Units"
+summary_output[29:insert_length,12] <- "copies per mL"
 
 formula_length<-nrow(run_file_unknown_sample_results_trim)
      
 #Add formula(s) for automatic calculation of sample value and stdev in excel
-for (i in 22:(21+formula_length)) {
+for (i in 29:(28+formula_length)) {
 summary_output[i,10] <- paste0("=((C",i,"*E",i,")/F",i,")*(G",i,"/H",i,")")
 }
 
 #Add formula(s) for automatic calculation of sample value and stdev in excel
-for (i in 22:(21+formula_length)) {
+for (i in 29:(28+formula_length)) {
   summary_output[i,11] <- paste0("=((D",i,"*E",i,")/F",i,")*(G",i,"/H",i,")")
 }
 
@@ -937,6 +1292,9 @@ write.table(
 #1.3 -  "Undetermined" ct values were preventing final results from being generated.  Undetermined ct values are 
 #now removed at the beginning of this process and then added back to the results prior to export.  
 #    - "Well_Position" is added to Run_results.csv output
+
+#3.0.1 - Added sxtA target analysis
+#      - tryCatch added to Test 7 for runs without Total Cyano targets
 
 ###END###
 
