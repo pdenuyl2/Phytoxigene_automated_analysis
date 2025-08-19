@@ -16,7 +16,7 @@ library(dplyr)
 ######################START USER DEFINED VARIABLES######################
 
 #Set file (.csv) - sourced from "results" tab
-run_file <- '250502-PhytoxigeneToxin-SHARC23-1-1dash5-PD.csv'
+run_file <- '250502-PhytoxigeneToxin-SHARC23-1-1dash5-PD_results.csv'
 
 ###
 #The following variables are optional and should only be used if the value is consistent across all samples being processed
