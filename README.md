@@ -58,10 +58,7 @@ Define variables in code
 6.	Designate names of gDNA extraction controls (Line 41) 			                           
 Example:  If two gDNA extraction controls were included in run, named: extCNTRL1 and extCNTRL2 change c('NA') to c(‘extCNTRL1’, ‘extCNTRL2’)
 
-7.	Run code by pressing the Ctrl+Enter (Windows), Command+Enter (Mac), or use the Run toolbar button
-
-Examine output files
-After running the code, there will be multiple output files generated in the “output” folder of the working_dir.
+7.	Run code by pressing the Ctrl+Enter (Windows), Command+Enter (Mac), or use the Run toolbar button. Examine output files. After running the code, there will be multiple output files generated in the “output” folder of the working_dir.
 
 8.	Open the file with the prefix “Run_results_summary” located in the “output” folder.
 
@@ -74,7 +71,7 @@ Rows 10-11 : QC results for *mcyE* Toxin assay standard curve, NTC, gDNA extract
 Rows 13-14 : QC results for *sxtA* Toxin assay standard curve, NTC, gDNA extraction controls, and environmental samples. Periods “.” indicate that the measure passed, while “FAIL” identifies that there as at least one sample or set of samples that did not meet the specifications identified in the test.  
 
 **Test 1:**	Checks every standard curve reaction to see if it is within 1 cycle threshold (CT) of the respective average master curve point
-Identify outliers in standard curve
+-Identify outliers in standard curve
  
 **Test 2:**	Performs modified Thompson Tau Test
 
@@ -83,20 +80,20 @@ Identify outliers in standard curve
 **Test 4:**	Checks every standard curve reaction to see if greater than - 3 standard deviations from respective average master curve point	
 
 **Test 5:**	Confirms CT of NTC is above 36   	
-Identify amplification (contamination) in NTC
+-Identify amplification (contamination) in NTC
 
 **Test 6:**	Confirms amplification is not greater than the limit of detection (100 copies per reaction). Determined by standard curve point NA015.   	
-Identify substantial amplification (contamination) in gDNA extraction control
+-Identify substantial amplification (contamination) in gDNA extraction control
 
 **Test 7:**	Confirms IAC from each sample does not deviate more than 1.5 cycle threshold from NTC IAC  
-A sample IAC over 1.5 cycle threshold from the NTC IAC suggests inhibition  
-A sample IAC under 1.5 cycle threshold from the NTC IAC does not indicate any issue  
+-A sample IAC over 1.5 cycle threshold from the NTC IAC suggests inhibition  
+-A sample IAC under 1.5 cycle threshold from the NTC IAC does not indicate any issue  
 
 **Test 8:**	Checks every sample run in duplicate to confirm measures don’t differentiate beyond 0.5 cycle threshold (CT)  
-Identify disagreement between replicates
+-Identify disagreement between replicates
 
 **Test 9:**	Checks every reaction to confirm it has a higher CT than the top point (NA026) calculated (average) for the master standard curve 	
-Confirms sample does not exceed upper bounds of master curve
+-Confirms sample does not exceed upper bounds of master curve
 
 **Test 10:**	[only included in manual template] Checks that the reaction is equal to or above the limit of detection for the assay (>=45 copies/reaction)  
 
@@ -147,7 +144,7 @@ Troubleshooting
 **Test 7**
 (Total assay only)	Locate: output/total/tests/test7_result_total.csv
 -Identify samples designated as “FAIL” starting at column H 
-- Dilute failed samples (both assays) and rerun  
+-Dilute failed samples (both assays) and rerun  
 
 **Test 8**	
 Locate: output/[total|mcyE|sxtA]/tests/test8_9_result_[total|mcyE|sxtA].csv  
