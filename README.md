@@ -27,40 +27,40 @@
 #### E.	PREPARATION
 Export Run .csv
 
-1.	Locate exported data (.xls/.xlsx) from QuantStudio6 run of interest					Data should have been automatically exported if the appropriate qPCR run template was used.
+1.)	Locate exported data (.xls/.xlsx) from QuantStudio6 run of interest					Data should have been automatically exported if the appropriate qPCR run template was used.
 
-2.	Click on ‘results’ tab in the .xls/xlsx run file
+2.)	Click on ‘results’ tab in the .xls/xlsx run file
 
-3.	Save results tab as a .csv into the unzipped working_dir directory 					File can be save under any name, but must have “.csv” file extension
+3.)	Save results tab as a .csv into the unzipped working_dir directory 					File can be save under any name, but must have “.csv” file extension
 run_file.csv included in directory as a placeholder
 
 Setup std_curve.csv (optional)
-4.	Copy and paste either assay’s standard curve data from previous run data into std_curve.csv		
+4.)	Copy and paste either assay’s standard curve data from previous run data into std_curve.csv		
 
-5.	Rename std_cuve.csv file to include unique information related to the run of interest	i.e. data run on August 6, 2022, rename to std_curve_06Aug22.csv
+5.)	Rename std_cuve.csv file to include unique information related to the run of interest	i.e. data run on August 6, 2022, rename to std_curve_06Aug22.csv
 
-6.	Alternately, copy a previously used std_curve.csv file into the working_dir.  
+6.)	Alternately, copy a previously used std_curve.csv file into the working_dir.  
 
 Do not add standard curve data from the run being processed into std_curve.csv, that data will be sourced from the exported run file.  
 
 #### F.	Run Code
 Define variables in code
-1.	Open analysis_code.R in Rstudio.
+1.)	Open analysis_code.R in Rstudio.
 
-2.	Edit ‘run_file.csv’ (Line 19) to match the results file name from step 4.
+2.)	Edit ‘run_file.csv’ (Line 19) to match the results file name from step 4.
 
-3.	Edit ‘std_curve.csv’ (Line 23) to match the standard curve file name from steps 6-7.
+3.)	Edit ‘std_curve.csv’ (Line 23) to match the standard curve file name from steps 6-7.
 
-4.	Assign template volume (Line 32) (5µL is standard for Phytoxigene protocols) 			  If template volume is not consistent across all samples, replace ‘5’ with ‘NA’. Template volumes can be added on a sample-by-sample basis in later steps of the protocol.
+4.)	Assign template volume (Line 32) (5µL is standard for Phytoxigene protocols) 			  If template volume is not consistent across all samples, replace ‘5’ with ‘NA’. Template volumes can be added on a sample-by-sample basis in later steps of the protocol.
 
-5.	Assign elution volume (Line 36) (100µL is generally standard) 			  		  If elution volume is not consistent across all samples, replace ‘100’ with ‘NA’.  Elution volumes can be added on a sample-by-sample basis in later steps of the protocol. 
+5.)	Assign elution volume (Line 36) (100µL is generally standard) 			  		  If elution volume is not consistent across all samples, replace ‘100’ with ‘NA’.  Elution volumes can be added on a sample-by-sample basis in later steps of the protocol. 
 
-6.	Designate names of gDNA extraction controls (Line 41) 			                           
+6.)	Designate names of gDNA extraction controls (Line 41) 			                           
 Example:  If two gDNA extraction controls were included in run, named: extCNTRL1 and extCNTRL2 change c('NA') to c(‘extCNTRL1’, ‘extCNTRL2’)
 
-7.	Run code by pressing the Ctrl+Enter (Windows), Command+Enter (Mac), or use the Run toolbar button. Examine output files. After running the code, there will be multiple output files generated in the “output” folder of the working_dir.
+7.)	Run code by pressing the Ctrl+Enter (Windows), Command+Enter (Mac), or use the Run toolbar button. Examine output files. After running the code, there will be multiple output files generated in the “output” folder of the working_dir.
 
-8.	Open the file with the prefix “Run_results_summary” located in the “output” folder.
+8.)	Open the file with the prefix “Run_results_summary” located in the “output” folder.
 
 Rows 1-5 : metadata pertaining to the QuantStudio6 run
 
@@ -128,30 +128,30 @@ Troubleshooting
 
 ##### When failures occur: 
 
-**Tests 1-4**  Locate: output/[total|mcyE|sxtA]/tests/test1_2_3_4_results_[total|mcyE|sxtA].csv  
+**Tests 1-4:**  Locate: output/[total|mcyE|sxtA]/tests/test1_2_3_4_results_[total|mcyE|sxtA].csv  
 -Identify samples designated as “FAIL” in columns M-P  
 -Consider removing failed samples from standard curve  
 
-**Test 5**  Locate: output/[total|mcyE|sxtA]/tests/test5_result_[total|mcyE|sxtA].csv  
+**Test 5:**  Locate: output/[total|mcyE|sxtA]/tests/test5_result_[total|mcyE|sxtA].csv  
 -Identify samples designated as “FAIL” in column H  
 -Consider rerunning entire plate, as no template control may show signs of contamination  
 
-**Test 6**  
+**Test 6:**  
 (Optional)	Locate: output/[total|mcyE|sxtA]/tests/test6_result_[total|mcyE|sxtA].csv  
 -Identify samples designated as “FAIL” starting at column H   
 -Consider taking action to address contamination during the genomic DNA extraction process  
 
-**Test 7**
+**Test 7:**
 (Total assay only)	Locate: output/total/tests/test7_result_total.csv
 -Identify samples designated as “FAIL” starting at column H 
 -Dilute failed samples (both assays) and rerun  
 
-**Test 8**	
+**Test 8:**	
 Locate: output/[total|mcyE|sxtA]/tests/test8_9_result_[total|mcyE|sxtA].csv  
 -Identify samples designated as “FAIL” in column L  
 -Investigate reasons why replicates are not in agreement  
 
-**Test 9**	
+**Test 9:**	
 Locate: output/[total|mcyE|sxtA]/tests/test8_9_result_[total|mcyE|sxtA].csv  
 -Identify samples designated as “FAIL” in column M  
 -Dilute samples and rerun  
