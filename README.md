@@ -43,7 +43,7 @@ Setup std_curve.csv (optional)
 
 Do not add standard curve data from the run being processed into std_curve.csv, that data will be sourced from the exported run file.  
 
-#### F.	Run Code
+#### F.	Run Code  
 Define variables in code
 1.)	Open analysis_code.R in Rstudio.
 
@@ -142,8 +142,8 @@ Troubleshooting
 -Consider taking action to address contamination during the genomic DNA extraction process  
 
 **Test 7:**
-(Total assay only)	Locate: output/total/tests/test7_result_total.csv
--Identify samples designated as “FAIL” starting at column H 
+(Total assay only)	Locate: output/total/tests/test7_result_total.csv  
+-Identify samples designated as “FAIL” starting at column H  
 -Dilute failed samples (both assays) and rerun  
 
 **Test 8:**	
