@@ -16,7 +16,7 @@ library(dplyr)
 ######################START USER DEFINED VARIABLES######################
 
 #Set file (.csv) - sourced from "results" tab
-run_file <- '2022-07-07_WLEweekly_22-July-06_TC.csv'
+run_file <- 'XXX.csv'         #example: '250502-PhytoxigeneToxin-SHARC23-1-1dash5-PD'
 
 ###
 #The following variables are optional and should only be used if the value is consistent across all samples being processed
@@ -477,7 +477,7 @@ std_curve_plot_toxin <- ggplot(std_curve_toxin_master,
   labs(x = "Log Starting Quantity (Copies Per Reaction)", y = "Ct") +
   scale_y_continuous(limits=c(0, 38), breaks = c(0,5,10,15,20,25,30,35))
 
-ggsave(std_curve_plot_toxin, height = 5, width = 5, path = "output/toxin", filename = "standard_curve_toxin.pdf", device = "pdf")
+ggsave(std_curve_plot_toxin, height = 5, width = 5, path = "output/mcye", filename = "standard_curve_mcye.pdf", device = "pdf")
 
 #Calculate and test r-squared of toxin std curve
 std_curve_toxin_r2 <- tryCatch(summary(lm(CT ~ Log_starting_quantity_machine, data = std_curve_toxin_master))$r.squared, error=function(e){"NA"})
@@ -623,7 +623,7 @@ tryCatch(for (i in 1:length(std_curve_toxin_master$test4)) {
 test1_4_results_toxin <- std_curve_toxin_master %>% select(Well_Position, Sample_Name, Target_Name, Task, CT, Ct_Mean, Ct_SD, Quantity, n, tau, CT_avg_allruns, Ct_SD_allruns, test1, test2, test3, test4) 
  
 write.csv(
-  test1_4_results_toxin, file='output/toxin/tests/test1_2_3_4_results_toxin.csv', row.names=FALSE)
+  test1_4_results_toxin, file='output/mcye/tests/test1_2_3_4_results_mcye.csv', row.names=FALSE)
 
 #NTC amplification check (test 5)
 tryCatch(for (i in 1:length(run_file_toxin_ntc$CT)) {
@@ -633,7 +633,7 @@ tryCatch(for (i in 1:length(run_file_toxin_ntc$CT)) {
 tryCatch(test5_result_toxin <- run_file_toxin_ntc %>% select(Well_Position, Sample_Name, Target_Name, Task, CT, Ct_Mean, Ct_SD, test5), error=function(e){"NA"})
 
 tryCatch(write.csv(
-  test5_result_toxin, file='output/toxin/tests/test5_result_toxin.csv', row.names=FALSE), error=function(e){"NA"})
+  test5_result_toxin, file='output/mcye/tests/test5_result_mcye.csv', row.names=FALSE), error=function(e){"NA"})
 
 #Extraction Blank Amplification Check (Test 6)
 tryCatch(for (i in 1:length(run_file_toxin_excntrl$CT)) {
@@ -643,7 +643,7 @@ tryCatch(for (i in 1:length(run_file_toxin_excntrl$CT)) {
 tryCatch(test6_result_toxin <- run_file_toxin_excntrl %>% select(Well_Position, Sample_Name, Target_Name, Task, CT, Ct_Mean, Ct_SD, test6), error=function(e){"NA"})
 
 tryCatch(write.csv(
-  test6_result_toxin, file='output/toxin/tests/test6_result_toxin.csv', row.names=FALSE), error=function(e){"NA"})
+  test6_result_toxin, file='output/mcye/tests/test6_result_mcye.csv', row.names=FALSE), error=function(e){"NA"})
 
 #IAC Check (Test 7) - NA for Toxin Assay
 
@@ -682,7 +682,7 @@ tryCatch(for (i in 1:length(run_file_toxin_unknown$CT)) {
 tryCatch(test8_9_result_toxin <- run_file_toxin_unknown %>% select(Well_Position, Sample_Name, Target_Name, Task, CT, Ct_Mean, Ct_SD, CPR, CPR_mean, Stdev_CPR, RSD, test8, test9), error=function(e){"NA"})
 
 tryCatch(write.csv(
-  test8_9_result_toxin, file='output/toxin/Tests/test8_9_result_toxin.csv', row.names=FALSE), error=function(e){"NA"})
+  test8_9_result_toxin, file='output/mcye/Tests/test8_9_result_mcye.csv', row.names=FALSE), error=function(e){"NA"})
 
 
 ######################################################################
@@ -1286,16 +1286,17 @@ write.table(
   summary_output, file='output/Run_results_summary.csv', row.names=FALSE, col.names=FALSE, sep=",")
 
 #Version edits
-#1.2 - added the ability of the code to identify NTC if the samples name is "NTC", regardless of assigned task
-#    - corrected Test 7 to include IAC failures labeled "Undetermined" 
+#1.2   - added the ability of the code to identify NTC if the samples name is "NTC", regardless of assigned task
+#      - corrected Test 7 to include IAC failures labeled "Undetermined" 
 
-#1.3 -  "Undetermined" ct values were preventing final results from being generated.  Undetermined ct values are 
-#now removed at the beginning of this process and then added back to the results prior to export.  
-#    - "Well_Position" is added to Run_results.csv output
+#1.3   - "Undetermined" ct values were preventing final results from being generated.  Undetermined ct values are 
+#.       now removed at the beginning of this process and then added back to the results prior to export.  
+#      - "Well_Position" is added to Run_results.csv output
 
-#2.0.1 - Added sxtA target analysis
+#2.0.1 - added sxtA target analysis
 #      - tryCatch added to Test 7 for runs without Total Cyano targets
-#      - Adjusted summary output addition to results summary in order to not cut off data
+#      - adjusted summary output to prevent data cut off
+#      - substitute mcye for toxin output folder and files now that sxta is also being processed
 
 ###END###
 
