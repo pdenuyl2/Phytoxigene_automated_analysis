@@ -1225,7 +1225,7 @@ run_file_unknown_sample_results_trim <- rbind(run_file_unknown_sample_results_tr
 insert_length <- dim(run_file_unknown_sample_results_trim)[1]+27
 insert_width <- dim(run_file_unknown_sample_results_trim)[2]
 
-summary_output[28:insert_length,1:insert_width] <- run_file_unknown_sample_results_trim
+summary_output[29:insert_length,1:insert_width] <- run_file_unknown_sample_results_trim
 summary_output[28, 1:insert_width] <- run_file_unknown_sample_results_head_trim
 
 run_file_unknown_sample_results[,4:6] <- round(run_file_unknown_sample_results[,4:6])
@@ -1293,8 +1293,9 @@ write.table(
 #now removed at the beginning of this process and then added back to the results prior to export.  
 #    - "Well_Position" is added to Run_results.csv output
 
-#3.0.1 - Added sxtA target analysis
+#2.0.1 - Added sxtA target analysis
 #      - tryCatch added to Test 7 for runs without Total Cyano targets
+#      - Adjusted summary output addition to results summary in order to not cut off data
 
 ###END###
 
