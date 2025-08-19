@@ -16,7 +16,7 @@ library(dplyr)
 ######################START USER DEFINED VARIABLES######################
 
 #Set file (.csv) - sourced from "results" tab
-run_file <- '250502-PhytoxigeneToxin-SHARC23-1-1dash5-PD_results.csv'
+run_file <- '2022-07-07_WLEweekly_22-July-06_TC.csv'
 
 ###
 #The following variables are optional and should only be used if the value is consistent across all samples being processed
@@ -1222,7 +1222,7 @@ names(run_file_sxta_unknown_undetermined_sub_trim) <- c("Sample_Name", "Target_N
 #THIS IS THE ISSUE THAT HAS COME UP!
 run_file_unknown_sample_results_trim <- rbind(run_file_unknown_sample_results_trim, run_file_total_unknown_undetermined_sub_trim, run_file_toxin_unknown_undetermined_sub_trim, run_file_sxta_unknown_undetermined_sub_trim)
 
-insert_length <- dim(run_file_unknown_sample_results_trim)[1]+27
+insert_length <- dim(run_file_unknown_sample_results_trim)[1]+28
 insert_width <- dim(run_file_unknown_sample_results_trim)[2]
 
 summary_output[29:insert_length,1:insert_width] <- run_file_unknown_sample_results_trim
