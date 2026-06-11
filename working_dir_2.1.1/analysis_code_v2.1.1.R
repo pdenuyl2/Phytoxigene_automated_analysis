@@ -16,7 +16,7 @@ library(dplyr)
 ######################START USER DEFINED VARIABLES######################
 
 #Set file (.csv) - sourced from "results" tab
-run_file <- 'XXX.csv'         #example: '250502-PhytoxigeneToxin-SHARC23-1-1dash5-PD.csv'
+run_file <- '2026-06-01_WLE-weekly_DNA-TC-TX_Undilutedv2.eds.csv'         #example: '250502-PhytoxigeneToxin-SHARC23-1-1dash5-PD.csv'
 
 ###
 #The following variables are optional and should only be used if the value is consistent across all samples being processed
@@ -183,7 +183,7 @@ std_curve_plot_total <- ggplot(std_curve_total_master,
   labs(x = "Log Starting Quantity (Copies Per Reaction)", y = "Ct") +
   scale_y_continuous(limits=c(0, 38), breaks = c(0,5,10,15,20,25,30,35))
 
-ggsave(std_curve_plot_total, height = 5, width = 5, path = "output/Total", filename = "standard_curve_total.pdf", device = "pdf")
+ggsave(std_curve_plot_total, height = 5, width = 5, path = "output/total", filename = "standard_curve_total.pdf", device = "pdf")
 
 #Calculate and test r-squared of total std curve
 std_curve_total_r2 <- tryCatch(summary(lm(CT ~ Log_starting_quantity_machine, data = std_curve_total_master))$r.squared, error=function(e){"NA"})
@@ -323,6 +323,10 @@ tryCatch(for (i in 1:length(std_curve_total_master$test4)) {
 }, error=function(e){"NA"})
 
 test1_4_results_total <- std_curve_total_master %>% select(Well_Position, Sample_Name, Target_Name, Task, CT, Ct_Mean, Ct_SD, Quantity, n, tau, CT_avg_allruns, Ct_SD_allruns, test1, test2, test3, test4) 
+
+if (!dir.exists("output/total/tests")) {
+  dir.create("output/total/tests", recursive = TRUE)
+}
 
 write.csv(
   test1_4_results_total, file='output/total/tests/test1_2_3_4_results_total.csv', row.names=FALSE)
@@ -477,6 +481,10 @@ std_curve_plot_toxin <- ggplot(std_curve_toxin_master,
   labs(x = "Log Starting Quantity (Copies Per Reaction)", y = "Ct") +
   scale_y_continuous(limits=c(0, 38), breaks = c(0,5,10,15,20,25,30,35))
 
+if (!dir.exists("output/mcye")) {
+  dir.create("output/mcye", recursive = TRUE)
+}
+
 ggsave(std_curve_plot_toxin, height = 5, width = 5, path = "output/mcye", filename = "standard_curve_mcye.pdf", device = "pdf")
 
 #Calculate and test r-squared of toxin std curve
@@ -622,6 +630,10 @@ tryCatch(for (i in 1:length(std_curve_toxin_master$test4)) {
 
 test1_4_results_toxin <- std_curve_toxin_master %>% select(Well_Position, Sample_Name, Target_Name, Task, CT, Ct_Mean, Ct_SD, Quantity, n, tau, CT_avg_allruns, Ct_SD_allruns, test1, test2, test3, test4) 
  
+if (!dir.exists("output/mcye/tests")) {
+  dir.create("output/mcye/tests", recursive = TRUE)
+}
+
 write.csv(
   test1_4_results_toxin, file='output/mcye/tests/test1_2_3_4_results_mcye.csv', row.names=FALSE)
 
@@ -683,7 +695,6 @@ tryCatch(test8_9_result_toxin <- run_file_toxin_unknown %>% select(Well_Position
 
 tryCatch(write.csv(
   test8_9_result_toxin, file='output/mcye/Tests/test8_9_result_mcye.csv', row.names=FALSE), error=function(e){"NA"})
-
 
 ######################################################################
 #Processing Stream - mcyE Toxin gene gene Target - End#
@@ -756,6 +767,10 @@ std_curve_plot_sxta <- ggplot(std_curve_sxta_master,
                parse = TRUE) +
   labs(x = "Log Starting Quantity (Copies Per Reaction)", y = "Ct") +
   scale_y_continuous(limits=c(0, 38), breaks = c(0,5,10,15,20,25,30,35))
+
+if (!dir.exists("output/sxta")) {
+  dir.create("output/sxta", recursive = TRUE)
+}
 
 ggsave(std_curve_plot_sxta, height = 5, width = 5, path = "output/sxta", filename = "standard_curve_sxta.pdf", device = "pdf")
 
@@ -901,6 +916,10 @@ tryCatch(for (i in 1:length(std_curve_sxta_master$test4)) {
 }, error=function(e){"NA"})
 
 test1_4_results_sxta <- std_curve_sxta_master %>% select(Well_Position, Sample_Name, Target_Name, Task, CT, Ct_Mean, Ct_SD, Quantity, n, tau, CT_avg_allruns, Ct_SD_allruns, test1, test2, test3, test4) 
+
+if (!dir.exists("output/sxta/tests")) {
+  dir.create("output/sxta/tests", recursive = TRUE)
+}
 
 write.csv(
   test1_4_results_sxta, file='output/sxta/tests/test1_2_3_4_results_sxta.csv', row.names=FALSE)
@@ -1178,8 +1197,8 @@ summary_output[22,5] <- std_curve_toxin_efficiency_test
 summary_output[24:25,2:5] <- std_curve_sxta_summary
 summary_output[24,1] <- "sxtA Toxin Gene Assay Std. Curve Metrics"
 #Standard curve Pass/FAIL - sxtA Toxin Gene
-summary_output[26,2] <- std_curve_toxin_r2_test
-summary_output[26,5] <- std_curve_toxin_efficiency_test
+summary_output[26,2] <- std_curve_sxta_r2_test
+summary_output[26,5] <- std_curve_sxta_efficiency_test
 
 #Results: sample concentrations and stats 
 run_file_total_unknown_sample_results <- tryCatch(run_file_total_unknown %>% select(Well_Position, Sample_Name, Target_Name, CPR, CPR_mean, Stdev_CPR), error=function(e){"NA"})
@@ -1297,6 +1316,9 @@ write.table(
 #      - tryCatch added to Test 7 for runs without Total Cyano targets
 #      - adjusted summary output to prevent data cut off
 #      - substitute mcye for toxin output folder and files now that sxta is also being processed
+
+#2.1.1 - added code to create the directory paths if they don't exist
+#      - fixed sxtA Pass/Fail results, which referenced mcyE curve
 
 ###END###
 
