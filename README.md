@@ -95,8 +95,8 @@ After completion, look in the `output` folder of your `working_dir`. Open the fi
 | **Test 7** | Identifies sample inhibition | Confirms sample IAC does not deviate $> 1.5$ CT from NTC IAC |
 | **Test 8** | Identifies disagreement between replicates | Checks if duplicates differentiate by $\le 0.5$ CT |
 | **Test 9** | Confirms sample doesn't exceed upper bounds | Confirms sample has a higher CT than the top calculated point (NA026) |
-| **Test 10** | *[Manual Template Only]* Limit of Detection | Checks if reaction is $\ge 45$ copies/reaction |
-| **Test 11** | *[Manual Template Only]* Limit of Quantification | Checks if reaction is $\ge 100$ copies/reaction |
+| **Test 10** | *Not available yet* Limit of Detection | Checks if reaction is $\ge 45$ copies/reaction |
+| **Test 11** | *Not available yet* Limit of Quantification | Checks if reaction is $\ge 100$ copies/reaction |
 
 * **Rows 16–26:** Standard curve parameters for all three assays (Total, *mcyE*, *sxtA*) generated from current and historical runs.
   * **Acceptance Criteria:** $R^2 > 0.985$ (Wells B15, B19) | Efficiency: $90\% < \text{Efficiency} < 110\%$ (Wells E15, B19)
