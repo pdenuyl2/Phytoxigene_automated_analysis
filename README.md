@@ -1,170 +1,144 @@
 # Phytoxigene Automated Analysis
 
-#### A.	SCOPE AND APPLICATION
+A streamlined pipeline to process qPCR results generated from the NOAA-GLERL HABs monitoring program using R.
 
-1.)	Walkthrough of steps to process qPCR results generated from the NOAA-GLERL HABs monitoring program using R code.  No previous knowledge of R is required. The current version of code is limited to use with the Phytoxigene Total Cyanobacteria (Catalogue No: 205-0050) and Toxin (*mcyE* and *sxtA* targets) (Catalogue No: 205-0051) assays.  
+---
 
-#### B.	SUMMARY OF METHOD
-1.)	R code and the accompanying directory/files are used to take the “raw” results from  Phytoxigene Total Cyanobacteria and Toxin Gene assays, perform QC, then provide final concentrations of each respective target. Both qPCR assays are processed following the same steps, with an ability to analysis samples run for Total Cyanobacteria, *mcyE*, and *sxtA* toxin genes in unison.  Previous standards can be included into the analysis to allow for easy processing of projects that span multiple runs. 
+## A. Scope and Application
 
-#### C.	DEFINITIONS 
-&nbsp;&nbsp;**IAC:**	Internal amplification control  
+This guide provides a walkthrough of the steps required to process qPCR results using R code. 
+* **Prerequisites:** No previous knowledge of R is required.
+* **Compatibility:** The current version of the code is limited to use with the following assays:
+  * **Phytoxigene Total Cyanobacteria** (Catalogue No: 205-0050)
+  * **Phytoxigene Toxin** (*mcyE* and *sxtA* targets) (Catalogue No: 205-0051)
 
-&nbsp;&nbsp;**Template volume:**	Volume (µl) of gDNA added to each qPCR reaction (Phytoxigene protocol is 5 µl)  
+---
 
-&nbsp;&nbsp;**Elution volume:**	Volume (µl) of eluant used to suspend the final gDNA extract  
+## B. Summary of Method
 
-&nbsp;&nbsp;**Dilution factor:**	gDNA is diluted to prevent amplification above the standard curve or reduce inhibition. Dilutions of 1:1 are written as a dilution factor of 2, 1:5 is a dilution factor of 5, &nbsp;&nbsp;1:10 is a dilution factor of 10, etc.  
+The provided R code and accompanying directory structure process "raw" results from Phytoxigene Total Cyanobacteria and Toxin Gene assays, perform Quality Control (QC), and calculate final target concentrations. 
 
-&nbsp;&nbsp;**CPR:**	Copies per reaction  
+Both qPCR assays follow identical processing steps and can analyze samples run for Total Cyanobacteria, *mcyE*, and *sxtA* toxin genes simultaneously. Historical standards can also be integrated into the analysis to allow for seamless data processing across projects spanning multiple instrument runs.
 
-#### D.	 Dependencies
-&nbsp;&nbsp;1.)	QuantStudio6 Real Time PCR System  
-&nbsp;&nbsp;2.)	Phytoxigene Total Cyanobacteria Assay (Catalogue No: 205-0050) or Phytoxigene Toxin Assay (Catalogue No: 205-0051)  
-&nbsp;&nbsp;3.)	qPCR run performed using template: 					WLEWeekly_Template_TCToxin.edt (avaialable on GLERL PC, Lab 708)  
-&nbsp;&nbsp;4.)	R/RStudio - https://www.rstudio.com  
+---
 
-#### E.	PREPARATION
-Export Run .csv
+## C. Definitions
 
-1.)	Locate exported data (.xls/.xlsx) from QuantStudio6 run of interest					Data should have been automatically exported if the appropriate qPCR run template was used.
+| Term | Definition |
+| :--- | :--- |
+| **IAC** | Internal Amplification Control |
+| **Template Volume** | Volume (µL) of gDNA added to each qPCR reaction (Phytoxigene protocol standard is 5 µL) |
+| **Elution Volume** | Volume (µL) of eluant used to suspend the final gDNA extract |
+| **Dilution Factor** | Multiplier used to calculate original concentration. Undiluted samples have a factor of 1. Dilutions mixed at a 1:1 ratio (1 part sample + 1 part diluent) have a factor of 2. For higher dilutions, use the total volume denominator (e.g., 1:5 dilution = factor of 5). |
+| **CPR** | Copies Per Reaction |
 
-2.)	Click on ‘results’ tab in the .xls/xlsx run file
+---
 
-3.)	Save results tab as a .csv into the unzipped working_dir directory 					File can be save under any name, but must have “.csv” file extension
-run_file.csv included in directory as a placeholder
+## D. Dependencies
 
-Setup std_curve.csv (optional)
-4.)	Copy and paste either assay’s standard curve data from previous run data into std_curve.csv		
+1. **Hardware:** QuantStudio 6 Real-Time PCR System
+2. **Assays:** Phytoxigene Total Cyanobacteria Assay (Cat No: 205-0050) or Phytoxigene Toxin Assay (Cat No: 205-0051)
+3. **Template File:** qPCR runs must be performed using the template: `WLEWeekly_Template_TCToxin.edt` *(available on GLERL PC, Lab 708)*
+4. **Software:** R / RStudio (Download at [rstudio.com](https://www.rstudio.com))
 
-5.)	Rename std_cuve.csv file to include unique information related to the run of interest	i.e. data run on August 6, 2022, rename to std_curve_06Aug22.csv
+---
 
-6.)	Alternately, copy a previously used std_curve.csv file into the working_dir.  
+## E. Preparation
 
-Do not add standard curve data from the run being processed into std_curve.csv, that data will be sourced from the exported run file.  
+### Export Run `.csv`
+1. Locate the exported data (`.xls`/`.xlsx`) from the target QuantStudio 6 run. 
+2. Click on the **Results** tab in the excel file.
+3. Save **only** this tab as a `.csv` file into your unzipped `working_dir` directory. 
+   * *Note: The file can be saved under any name but must use the `.csv` extension. A template named `run_file.csv` is included in the directory as a placeholder.*
 
-#### F.	Run Code  
-Define variables in code
-1.)	Open analysis_code.R in Rstudio.
+### Setup `std_curve.csv` (Optional)
+4. Copy and paste standard curve data from a previous run into `std_curve.csv`.
+5. Rename `std_curve.csv` to include unique identifying information related to the run (e.g., for data run on August 6, 2022, rename to `std_curve_06Aug22.csv`).
+6. Alternatively, copy a previously generated `std_curve.csv` file into the `working_dir`.
 
-2.)	Edit ‘run_file.csv’ (Line 19) to match the results file name from step 4.
+> ⚠️ **CRITICAL:** Do not add standard curve data from the *current* run being processed into `std_curve.csv`. That data will be automatically sourced from the exported run file.
 
-3.)	Edit ‘std_curve.csv’ (Line 23) to match the standard curve file name from steps 6-7.
+---
 
-4.)	Assign template volume (Line 32) (5µL is standard for Phytoxigene protocols) 			  If template volume is not consistent across all samples, replace ‘5’ with ‘NA’. Template volumes can be added on a sample-by-sample basis in later steps of the protocol.
+## F. Running the Code
 
-5.)	Assign elution volume (Line 36) (100µL is generally standard) 			  		  If elution volume is not consistent across all samples, replace ‘100’ with ‘NA’.  Elution volumes can be added on a sample-by-sample basis in later steps of the protocol. 
+### 1. Define Variables in the Script
+1. Open `analysis_code.R` in RStudio.
+2. **Line 19:** Edit `'run_file.csv'` to match your results file.
+3. **Line 23 (Optional):** Edit `'std_curve.csv'` located in the working directory to include all standards from previous runs.
+4. **Line 32 (Optional):** Assign the **Template Volume** (5 µL is standard). If volumes vary across samples, replace `5` with `NA`. They can be added on a sample-by-sample basis later.
+5. **Line 36:** Assign the **Elution Volume** (100 µL is standard). If volumes vary, replace `100` with `NA`.
+6. **Line 41 (Optional):** Designate the names of gDNA extraction controls.
+   * *Example:* If two controls named `extCNTRL1` and `extCNTRL2` were used, change `c('NA')` to `c('extCNTRL1', 'extCNTRL2')`.
 
-6.)	Designate names of gDNA extraction controls (Line 41) 			                           
-Example:  If two gDNA extraction controls were included in run, named: extCNTRL1 and extCNTRL2 change c('NA') to c(‘extCNTRL1’, ‘extCNTRL2’)
+### 2. Execute the Code
+Run the code by pressing `Ctrl + Enter` (Windows), `Cmd + Enter` (Mac), or using the **Run** toolbar button.
 
-7.)	Run code by pressing the Ctrl+Enter (Windows), Command+Enter (Mac), or use the Run toolbar button. Examine output files. After running the code, there will be multiple output files generated in the “output” folder of the working_dir.
+### 3. Examine Output Files
+After completion, look in the `output` folder of your `working_dir`. Open the file prefixed with **`Run_results_summary`**:
 
-8.)	Open the file with the prefix “Run_results_summary” located in the “output” folder.
+* **Rows 1–5:** Metadata pertaining to the QuantStudio 6 run.
+* **Rows 7–8:** QC results for **Total Cyanobacteria** assay.
+* **Rows 10–11:** QC results for **_mcyE_ Toxin** assay.
+* **Rows 13–14:** QC results for **_sxtA_ Toxin** assay.
+  * *Note: A period (`.`) indicates a passing measure. `FAIL` identifies at least one sample/set that did not meet specifications.*
 
-Rows 1-5 : metadata pertaining to the QuantStudio6 run
+#### Quality Control Test Matrix
+| Test ID | Objective / Description | Target / Threshold |
+| :--- | :--- | :--- |
+| **Test 1** | Identifies standard curve outliers | Checks if reactions are within 1 CT of the average master curve point |
+| **Test 2** | Performs modified Thompson Tau Test | Statistical outlier detection |
+| **Test 3** | Checks standard curve upper bound | Checks if reaction is $< +3$ SD from the average master curve point |
+| **Test 4** | Checks standard curve lower bound | Checks if reaction is $> -3$ SD from the average master curve point |
+| **Test 5** | Identifies NTC amplification (contamination) | Confirms CT of No Template Control (NTC) is $> 36$ |
+| **Test 6** | Identifies extraction control contamination | Confirms extraction control amplification is $\le$ Limit of Detection (100 CPR, point NA015) |
+| **Test 7** | Identifies sample inhibition | Confirms sample IAC does not deviate $> 1.5$ CT from NTC IAC |
+| **Test 8** | Identifies disagreement between replicates | Checks if duplicates differentiate by $\le 0.5$ CT |
+| **Test 9** | Confirms sample doesn't exceed upper bounds | Confirms sample has a higher CT than the top calculated point (NA026) |
+| **Test 10** | *[Manual Template Only]* Limit of Detection | Checks if reaction is $\ge 45$ copies/reaction |
+| **Test 11** | *[Manual Template Only]* Limit of Quantification | Checks if reaction is $\ge 100$ copies/reaction |
 
-Rows 7-8 : QC results for Total Cyanobacteria assay standard curve, NTC, gDNA extraction controls, and environmental samples. Periods “.” indicate that the measure passed, while “FAIL” identifies that there as at least one sample or set of samples that did not meet the specifications identified in the test.  
+* **Rows 16–26:** Standard curve parameters for all three assays (Total, *mcyE*, *sxtA*) generated from current and historical runs.
+  * **Acceptance Criteria:** $R^2 > 0.985$ (Wells B15, B19) | Efficiency: $90\% < \text{Efficiency} < 110\%$ (Wells E15, B19)
+    
+* **Rows 28+:** Manually enter meta-parameters for each sample:
+  * Column E (`dilution_factor`)
+  * Column H (`volume_filtered_mL`)
+  * Column F & G (If template or elution volumes were set as `NA` in step 1)
 
-Rows 10-11 : QC results for *mcyE* Toxin assay standard curve, NTC, gDNA extraction controls, and environmental samples. Periods “.” indicate that the measure passed, while “FAIL” identifies that there as at least one sample or set of samples that did not meet the specifications identified in the test.  
+### Final Values & Special Cases
+* **Final Concentration:** Generated in **Column J** (Standard Deviation in **Column K**) in units of **copies per mL** once all fields are complete.
+* **Undetermined Samples:** If a sample has partial amplification among replicates (some "Undetermined", some with CT values), `Run_results_summary` calculates `CPR_mean` using only the amplified wells and adds a row noting the undetermined wells. Check the `Run_results` file for full clarity.
 
-Rows 13-14 : QC results for *sxtA* Toxin assay standard curve, NTC, gDNA extraction controls, and environmental samples. Periods “.” indicate that the measure passed, while “FAIL” identifies that there as at least one sample or set of samples that did not meet the specifications identified in the test.  
+> 📝 **NOTE:** If all tests pass, the file prefixed `Run_results` contains the final accurate individual reaction data. **Do not use this file until all `FAIL` marks in the summary file are resolved.**
 
-**Test 1:**	Checks every standard curve reaction to see if it is within 1 cycle threshold (CT) of the respective average master curve point
--Identify outliers in standard curve
- 
-**Test 2:**	Performs modified Thompson Tau Test
+---
 
-**Test 3:**	Checks every standard curve reaction to see if less than + 3 standard deviations from respective average master curve point	
+## Troubleshooting
 
-**Test 4:**	Checks every standard curve reaction to see if greater than - 3 standard deviations from respective average master curve point	
+When failures occur, use the specific test files located in `output/[total|mcyE|sxtA]/tests/` to trace and remedy the errors.
 
-**Test 5:**	Confirms CT of NTC is above 36   	
--Identify amplification (contamination) in NTC
+* **Tests 1–4:** Open `test1_2_3_4_results_[assay].csv`
+  * Identify samples marked `FAIL` in columns M–P. Consider removing failed points from the standard curve.
+* **Test 5:** Open `test5_result_[assay].csv`
+  * Identify samples marked `FAIL` in column H. Consider rerunning the plate due to NTC contamination.
+* **Test 6:** Open `test6_result_[assay].csv`
+  * Identify samples marked `FAIL` in column H. Address contamination protocols during genomic DNA extraction.
+* **Test 7:** *(Total assay only)* Open `test7_result_total.csv`
+  * Identify samples marked `FAIL` in column H. Dilute failed samples and rerun both assays to avoid inhibition.
+* **Test 8:** Open `test8_9_result_[assay].csv`
+  * Identify samples marked `FAIL` in column L. Investigate pipetting consistency between replicates.
+* **Test 9:** Open `test8_9_result_[assay].csv`
+  * Identify samples marked `FAIL` in column M. Dilute samples and rerun to bring within standard range.
 
-**Test 6:**	Confirms amplification is not greater than the limit of detection (100 copies per reaction). Determined by standard curve point NA015.   	
--Identify substantial amplification (contamination) in gDNA extraction control
+### Omitting Samples from Analysis
+If you decide to omit an outlier or failed reaction:
+1. Open your primary input file (`run_file.csv` or equivalent).
+2. Starting at **Row 49**, change the value in **Column C** from `FALSE` to `TRUE` for the target row.
+3. Save the file, re-run the R script, and re-examine the newly generated summary output.
 
-**Test 7:**	Confirms IAC from each sample does not deviate more than 1.5 cycle threshold from NTC IAC  
--A sample IAC over 1.5 cycle threshold from the NTC IAC suggests inhibition  
--A sample IAC under 1.5 cycle threshold from the NTC IAC does not indicate any issue  
+---
 
-**Test 8:**	Checks every sample run in duplicate to confirm measures don’t differentiate beyond 0.5 cycle threshold (CT)  
--Identify disagreement between replicates
+## G. References
 
-**Test 9:**	Checks every reaction to confirm it has a higher CT than the top point (NA026) calculated (average) for the master standard curve 	
--Confirms sample does not exceed upper bounds of master curve
-
-**Test 10:**	[only included in manual template] Checks that the reaction is equal to or above the limit of detection for the assay (>=45 copies/reaction)  
-
-**Test 11:**	[only included in manual template] Checks that the reaction is equal to or above the limit of quantification for the assay (>=100 copies/reaction)  
-
-Rows 16-18 : Total Cyanobacteria assay standard curve parameters generated from the standard curve reactions included in the processed run as well as previous runs (std_curve.csv; optional).  
-
-Rows 20-22 : *mcyE* Toxin assay standard curve parameters generated from the standard curve reactions included in the processed run as well as previous runs (std_curve.csv; optional).  
-
-Rows 24-26 : *sxtA* Toxin assay standard curve parameters generated from the standard curve reactions included in the processed run as well as previous runs (std_curve.csv; optional). 
-
-##### Standard curve tests  
-R-squared	>0.985	Wells B15, B19  
-Efficiency	90< %Efficiency <110
-	Wells E15, B19
-
-Rows 28+ : Manually enter dilution factor (column E: “dilution_factor”) for each sample.  Manually enter the volume (mL) of sample water processed through the filter used for gDNA extraction (column H: “volume_filtered_mL”) for each sample. 
-
-If template volume (column F) or elution volume (column G) was designated as ‘NA’ in the user defined variables of the code, manually enter values for each sample.
-
-##### Final values
-Once all fields (column C-H) have been filled out a final value will be generated in column J. The standard deviation between replicates (if run) is generated in column K.  Both are provided in units: copies per mL.  
-
-##### Undetermined samples  
-Samples that were designated with “Undetermined” CT values during the run will be included in the Run_results and Run_results_summary outputs; however, if a sample is run in replicate and some of the replicates are “Undetermined”, while others have CT values, the Run_results_summary will only calculate CPR_mean for those samples with CT values.  In this example, the Run_results_summary will have a row for the CPR_mean calculation and an additional row indicating that the sample was also “Undetermined”.  In this case, it may be useful to refer to the Run_results file for better clarity.  
-
-Note:
-If all tests complete without failures, the file with the prefix “Run_results” located in the “output” folder provides accurate individual reaction results.  Do not use until all problems (“FAIL”) indicated in the run summary file are addressed.  
-
-Troubleshooting
-	Not all runs will complete free from failures.  The point of this code is to provide a means to trace and address these problems when they occur. Each test result is detailed in the respective “total”, "mcyE”, and "sxtA"/tests folders.  When there is a failure in the summary file, examine the data further to determine whether individual samples can be omitted, or a new run needs to be completed.  
-
-##### When failures occur: 
-
-**Tests 1-4:**  Locate: output/[total|mcyE|sxtA]/tests/test1_2_3_4_results_[total|mcyE|sxtA].csv  
--Identify samples designated as “FAIL” in columns M-P  
--Consider removing failed samples from standard curve  
-
-**Test 5:**  Locate: output/[total|mcyE|sxtA]/tests/test5_result_[total|mcyE|sxtA].csv  
--Identify samples designated as “FAIL” in column H  
--Consider rerunning entire plate, as no template control may show signs of contamination  
-
-**Test 6:**  
-(Optional)	Locate: output/[total|mcyE|sxtA]/tests/test6_result_[total|mcyE|sxtA].csv  
--Identify samples designated as “FAIL” starting at column H   
--Consider taking action to address contamination during the genomic DNA extraction process  
-
-**Test 7:**
-(Total assay only)	Locate: output/total/tests/test7_result_total.csv  
--Identify samples designated as “FAIL” starting at column H  
--Dilute failed samples (both assays) and rerun  
-
-**Test 8:**	
-Locate: output/[total|mcyE|sxtA]/tests/test8_9_result_[total|mcyE|sxtA].csv  
--Identify samples designated as “FAIL” in column L  
--Investigate reasons why replicates are not in agreement  
-
-**Test 9:**	
-Locate: output/[total|mcyE|sxtA]/tests/test8_9_result_[total|mcyE|sxtA].csv  
--Identify samples designated as “FAIL” in column M  
--Dilute samples and rerun  
-
-**Omitting samples:**
-After identifying samples or reactions you want to omit, return to ‘run_file.csv’ or equivalent in the primary working_dir folder. 
-
-Starting at row 49, column C of the results file provides the option to remove a sample from analysis by changing “FALSE” to “TRUE”.  
-
-Save edited run file, rerun code, and reexamine output
-	  	                      
-#### G.	REFERENCES
-1.	Phytoxigene CyanoDTec manual - version 9, August 2019 
-	https://static1.squarespace.com/static/531043b0e4b013842a3999f0/t/5d788d085bd75417004e0916/1568181527263/CyanoDTec+Procedure+Ver9.pdf
-	
- 
+* Phytoxigene CyanoDTec Manual - Version 9, August 2019. [Download PDF Link](https://static1.squarespace.com/static/531043b0e4b013842a3999f0/t/5d788d085bd75417004e0916/1568181527263/CyanoDTec+Procedure+Ver9.pdf)
