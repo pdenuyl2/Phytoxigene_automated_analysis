@@ -95,8 +95,8 @@ After completion, look in the `output` folder of your `working_dir`. Open the fi
 | **Test 7** | Identifies sample inhibition | Confirms sample IAC does not deviate $> 1.5$ CT from NTC IAC |
 | **Test 8** | Identifies disagreement between replicates | Checks if duplicates differentiate by $\le 0.5$ CT |
 | **Test 9** | Confirms sample doesn't exceed upper bounds | Confirms sample has a higher CT than the top calculated point (NA026) |
-| **Test 10** | *[Not available in current release]* Limit of Detection | Checks if reaction is $\ge 45$ copies/reaction |
-| **Test 11** | *[Not available in current release]* Limit of Quantification | Checks if reaction is $\ge 100$ copies/reaction |
+| **Test 10** | Below Detection Limit (BDL) of Assay | Checks if reaction is $\ge 45$ copies/reaction |
+| **Test 11** | Below Quantification Limit of Assay (BQL) | Checks if reaction is $\ge 100$ copies/reaction |
 
 * **Rows 16–26:** Standard curve parameters for all three assays (Total, *mcyE*, *sxtA*) generated from current and historical runs.
   * **Acceptance Criteria:** $R^2 > 0.985$ (Wells B15, B19) | Efficiency: $90\% < \text{Efficiency} < 110\%$ (Wells E15, B19)
@@ -130,6 +130,10 @@ When failures occur, use the specific test files located in `output/[total|mcyE|
   * Identify samples marked `FAIL` in column L. Investigate pipetting consistency between replicates.
 * **Test 9:** Open `test8_9_result_[assay].csv`
   * Identify samples marked `FAIL` in column M. Dilute samples and rerun to bring within standard range.
+* **Test 10:** Open `test10_11_result_[assay].csv`
+  * Identify samples marked `BDL` in column L. Sample concentrations should not be reported as detections.  
+* **Test 11:** Open `test10_11_result_[assay].csv`
+  * Identify samples marked `BQL` in column M. Make note and report that results are below quantification limit of assay.
 
 ### Omitting Samples from Analysis
 If you decide to omit an outlier or failed reaction:
