@@ -16,7 +16,7 @@ library(dplyr)
 ######################START USER DEFINED VARIABLES######################
 
 #Set file (.csv) - sourced from "results" tab
-run_file <- 'XXXX'         #example: '250502-PhytoxigeneToxin-SHARC23-1-1dash5-PD.csv'
+run_file <- '2026-06-01_WLE-weekly_DNA-TC-TX_Undilutedv3.eds.csv'         #example: '250502-PhytoxigeneToxin-SHARC23-1-1dash5-PD.csv'
 
 ###
 #The following variables are optional and should only be used if the value is consistent across all samples being processed
@@ -177,7 +177,7 @@ std_curve_plot_total <- ggplot(std_curve_total_master,
   geom_point(size = 5) +
   geom_smooth(formula = y ~ x, method='lm', se=FALSE, color="black") +
   theme_bw() + 
-  stat_poly_eq(aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~~~~")),
+  stat_poly_eq(aes(label = paste(after_stat(eq.label), after_stat(rr.label), sep = "~~~~~~")),
                formula = y~x, size = 6,
                parse = TRUE) +
   labs(x = "Log Starting Quantity (Copies Per Reaction)", y = "Ct") +
@@ -491,7 +491,7 @@ std_curve_plot_toxin <- ggplot(std_curve_toxin_master,
   geom_point(size = 5) +
   geom_smooth(formula = y ~ x, method='lm', se=FALSE, color="black") +
   theme_bw() + 
-  stat_poly_eq(aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~~~~")),
+  stat_poly_eq(aes(label = paste(after_stat(eq.label), after_stat(rr.label), sep = "~~~~~~")),
                formula = y~x, size = 6,
                parse = TRUE) +
   labs(x = "Log Starting Quantity (Copies Per Reaction)", y = "Ct") +
@@ -805,7 +805,7 @@ std_curve_plot_sxta <- ggplot(std_curve_sxta_master,
   geom_point(size = 5) +
   geom_smooth(formula = y ~ x, method='lm', se=FALSE, color="black") +
   theme_bw() + 
-  stat_poly_eq(aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~~~~")),
+  stat_poly_eq(aes(label = paste(after_stat(eq.label), after_stat(rr.label), sep = "~~~~~~")),
                formula = y~x, size = 6,
                parse = TRUE) +
   labs(x = "Log Starting Quantity (Copies Per Reaction)", y = "Ct") +
@@ -842,11 +842,11 @@ std_curve_sxta_efficiency_test <- ifelse(std_curve_sxta_efficiency == "NA", std_
 
 #Standard curve outlier check (tests 1-4)
 #Create n_tau table
-n_tau = matrix(c(3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,15, 16, 17,
+n_tau = matrix(c(3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,
                  18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
                  1.1511, 1.425, 1.5712, 1.6563, 1.711, 1.7491, 1.777, 1.7984, 1.8153, 1.829, 1.8403, 1.8498,
-                 1.8579, 1.8649, 1.871, 1.8764, 1.8811, 1.8853, 1.8891, 1.8926, 1.8957, 1.8985, 1.9011, 
-                 1.9035, 1.9057, 1.9078, 1.9096, 1.9114), ncol = 2, byrow=FALSE)
+                 1.8579, 1.8649, 1.871, 1.8764, 1.8811, 1.8853, 1.8891, 1.8926, 1.8957, 1.8985, 1.9011,
+                 1.9035, 1.9057, 1.9078, 1.9096, 1.9114), ncol = 2, byrow = FALSE)
 colnames(n_tau) <- c("n", "tau")
 
 #Assign Tau to each sample based on (n) - Modified Thompson Tau - Test 2

@@ -1,0 +1,149 @@
+﻿Block Type,Fast 96-Well Block (0.1mL),,,,,,,,,,,,,,,,,,,,,,,,
+Calibration Background is expired,No,,,,,,,,,,,,,,,,,,,,,,,,
+Calibration Background performed on,06-08-2026,,,,,,,,,,,,,,,,,,,,,,,,
+Calibration Pure Dye ABY is expired,No,,,,,,,,,,,,,,,,,,,,,,,,
+Calibration Pure Dye ABY performed on,03-11-2026,,,,,,,,,,,,,,,,,,,,,,,,
+Calibration Pure Dye CALFL-ORNG is expired,No,,,,,,,,,,,,,,,,,,,,,,,,
+Calibration Pure Dye CALFL-ORNG performed on,03-11-2026,,,,,,,,,,,,,,,,,,,,,,,,
+Calibration Pure Dye CALFL-RED is expired,No,,,,,,,,,,,,,,,,,,,,,,,,
+Calibration Pure Dye CALFL-RED performed on,03-11-2026,,,,,,,,,,,,,,,,,,,,,,,,
+Calibration Pure Dye CY5 is expired,No,,,,,,,,,,,,,,,,,,,,,,,,
+Calibration Pure Dye CY5 performed on,03-11-2026,,,,,,,,,,,,,,,,,,,,,,,,
+Calibration Pure Dye FAM is expired,No,,,,,,,,,,,,,,,,,,,,,,,,
+Calibration Pure Dye FAM performed on,03-11-2026,,,,,,,,,,,,,,,,,,,,,,,,
+Calibration Pure Dye JUN is expired,No,,,,,,,,,,,,,,,,,,,,,,,,
+Calibration Pure Dye JUN performed on,03-11-2026,,,,,,,,,,,,,,,,,,,,,,,,
+Calibration Pure Dye MUSTANG PURPLE is expired,No,,,,,,,,,,,,,,,,,,,,,,,,
+Calibration Pure Dye MUSTANG PURPLE performed on,03-11-2026,,,,,,,,,,,,,,,,,,,,,,,,
+Calibration Pure Dye NED is expired,No,,,,,,,,,,,,,,,,,,,,,,,,
+Calibration Pure Dye NED performed on,03-11-2026,,,,,,,,,,,,,,,,,,,,,,,,
+Calibration Pure Dye ROX is expired,No,,,,,,,,,,,,,,,,,,,,,,,,
+Calibration Pure Dye ROX performed on,03-11-2026,,,,,,,,,,,,,,,,,,,,,,,,
+Calibration Pure Dye SYBR is expired,No,,,,,,,,,,,,,,,,,,,,,,,,
+Calibration Pure Dye SYBR performed on,03-11-2026,,,,,,,,,,,,,,,,,,,,,,,,
+Calibration Pure Dye TAMRA is expired,No,,,,,,,,,,,,,,,,,,,,,,,,
+Calibration Pure Dye TAMRA performed on,03-11-2026,,,,,,,,,,,,,,,,,,,,,,,,
+Calibration Pure Dye VIC is expired,No,,,,,,,,,,,,,,,,,,,,,,,,
+Calibration Pure Dye VIC performed on,03-11-2026,,,,,,,,,,,,,,,,,,,,,,,,
+Calibration ROI is expired,No,,,,,,,,,,,,,,,,,,,,,,,,
+Calibration ROI performed on,03-11-2026,,,,,,,,,,,,,,,,,,,,,,,,
+Calibration Uniformity is expired,No,,,,,,,,,,,,,,,,,,,,,,,,
+Calibration Uniformity performed on,03-11-2026,,,,,,,,,,,,,,,,,,,,,,,,
+Chemistry,TAQMAN,,,,,,,,,,,,,,,,,,,,,,,,
+Date Created,2026-06-09 19:32:37 PM UTC,,,,,,,,,,,,,,,,,,,,,,,,
+Experiment Barcode,,,,,,,,,,,,,,,,,,,,,,,,,
+Experiment Comment,,,,,,,,,,,,,,,,,,,,,,,,,
+Experiment File Name,D:\Applied Biosystems\QuantStudio Real-Time PCR Software\User Files\WLE_Weekly\2026 WLE Weekly Data\2026-06-01_WLE-weekly_DNA-TC-TX_Undiluted.eds,,,,,,,,,,,,,,,,,,,,,,,,
+Experiment Name,2026-06-01_WLE-weekly_DNA-TC-TX_Undiluted.eds,,,,,,,,,,,,,,,,,,,,,,,,
+Experiment Run End Time,2026-06-09 20:21:35 PM UTC,,,,,,,,,,,,,,,,,,,,,,,,
+Experiment Type,Standard Curve,,,,,,,,,,,,,,,,,,,,,,,,
+Instrument Name,278862765,,,,,,,,,,,,,,,,,,,,,,,,
+Instrument Serial Number,278862765,,,,,,,,,,,,,,,,,,,,,,,,
+Instrument Type,QuantStudio(TM) 6 Flex System,,,,,,,,,,,,,,,,,,,,,,,,
+Passive Reference,,,,,,,,,,,,,,,,,,,,,,,,,
+Quantification Cycle Method,Ct,,,,,,,,,,,,,,,,,,,,,,,,
+Signal Smoothing On,true,,,,,,,,,,,,,,,,,,,,,,,,
+Stage/ Cycle where Analysis is performed,"Stage 2, Step 2",,,,,,,,,,,,,,,,,,,,,,,,
+User Name,TA + PKS + PD,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,
+Well,Well Position,Omit,Sample Name,Target Name,Task,Reporter,Quencher,CT,Ct Mean,Ct SD,Quantity,Quantity Mean,Quantity SD,Automatic Ct Threshold,Ct Threshold,Automatic Baseline,Baseline Start,Baseline End,Comments,Y-Intercept,R(superscript 2),Slope,Efficiency,Amp Score,Cq Conf
+1,A1,false,NA026,Internal Amplification Control (IAC),UNKNOWN,CALFL-ORNG,NFQ-MGB,30.696,30.413,0.401,,,,false,"100,000.000",false,1,40,,,,,,2.727,0.979
+1,A1,false,NA026,Total Cyanobacteria (16S rRNA gene),STANDARD,FAM,NFQ-MGB,18.728,18.558,0.240,"1,000,000.000",,,false,"250,000.000",false,1,40,,40.628,0.996,-3.735,85.229,3.061,0.768
+2,A2,false,NA026,Internal Amplification Control (IAC),UNKNOWN,CALFL-ORNG,NFQ-MGB,30.129,30.413,0.401,,,,false,"100,000.000",false,1,40,,,,,,2.757,0.980
+2,A2,false,NA026,Total Cyanobacteria (16S rRNA gene),STANDARD,FAM,NFQ-MGB,18.388,18.558,0.240,"1,000,000.000",,,false,"250,000.000",false,1,40,,40.628,0.996,-3.735,85.229,3.098,0.703
+3,A3,false,WE02S,Internal Amplification Control (IAC),UNKNOWN,CALFL-ORNG,NFQ-MGB,29.421,29.421,,,,,false,"100,000.000",false,1,40,,,,,,2.735,0.984
+3,A3,false,WE02S,Total Cyanobacteria (16S rRNA gene),UNKNOWN,FAM,NFQ-MGB,24.626,24.626,,"19,227.008","19,227.008",,false,"250,000.000",false,1,40,,40.628,0.996,-3.735,85.229,3.036,0.646
+4,A4,false,WE04S,Internal Amplification Control (IAC),UNKNOWN,CALFL-ORNG,NFQ-MGB,29.524,29.524,,,,,false,"100,000.000",false,1,40,,,,,,2.761,0.992
+4,A4,false,WE04S,Total Cyanobacteria (16S rRNA gene),UNKNOWN,FAM,NFQ-MGB,23.535,23.535,,"37,656.156","37,656.156",,false,"250,000.000",false,1,40,,40.628,0.996,-3.735,85.229,3.068,0.703
+5,A5,false,WE06S,Internal Amplification Control (IAC),UNKNOWN,CALFL-ORNG,NFQ-MGB,29.345,29.345,,,,,false,"100,000.000",false,1,40,,,,,,2.777,0.987
+5,A5,false,WE06S,Total Cyanobacteria (16S rRNA gene),UNKNOWN,FAM,NFQ-MGB,20.987,20.987,,"181,117.125","181,117.125",,false,"250,000.000",false,1,40,,40.628,0.996,-3.735,85.229,3.106,0.649
+6,A6,false,WE08S,Internal Amplification Control (IAC),UNKNOWN,CALFL-ORNG,NFQ-MGB,29.305,29.305,,,,,false,"100,000.000",false,1,40,,,,,,2.772,0.991
+6,A6,false,WE08S,Total Cyanobacteria (16S rRNA gene),UNKNOWN,FAM,NFQ-MGB,22.305,22.305,,"80,403.820","80,403.820",,false,"250,000.000",false,1,40,,40.628,0.996,-3.735,85.229,3.084,0.715
+7,A7,false,NA026,Cylindrospermopsin (cyrA),STANDARD,CALFL-ORNG,NFQ-MGB,18.984,19.028,0.062,"1,000,000.000",,,false,"125,000.000",false,1,40,,39.232,0.999,-3.381,97.612,2.943,0.989
+7,A7,false,NA026,Microcystin/Nodularin (mcyE/ndaF),STANDARD,FAM,NFQ-MGB,18.309,18.346,0.053,"1,000,000.000",,,false,"300,000.000",false,1,40,,37.798,0.498,-2.809,127.012,3.190,0.826
+7,A7,false,NA026,Saxitoxin (SxtA),STANDARD,CALFL-RED,NFQ-MGB,18.500,18.576,0.108,"1,000,000.000",,,false,"400,000.000",false,1,40,,39.159,0.975,-3.350,98.829,3.163,0.797
+8,A8,false,NA026,Cylindrospermopsin (cyrA),STANDARD,CALFL-ORNG,NFQ-MGB,19.072,19.028,0.062,"1,000,000.000",,,false,"125,000.000",false,1,40,,39.232,0.999,-3.381,97.612,2.933,0.980
+8,A8,false,NA026,Microcystin/Nodularin (mcyE/ndaF),STANDARD,FAM,NFQ-MGB,18.383,18.346,0.053,"1,000,000.000",,,false,"300,000.000",false,1,40,,37.798,0.498,-2.809,127.012,3.179,0.819
+8,A8,false,NA026,Saxitoxin (SxtA),STANDARD,CALFL-RED,NFQ-MGB,18.653,18.576,0.108,"1,000,000.000",,,false,"400,000.000",false,1,40,,39.159,0.975,-3.350,98.829,3.156,0.808
+9,A9,false,WE02S,Cylindrospermopsin (cyrA),UNKNOWN,CALFL-ORNG,NFQ-MGB,Undetermined,,,,,,false,"125,000.000",false,1,40,,39.232,0.999,-3.381,97.612,1.423,0.000
+9,A9,false,WE02S,Microcystin/Nodularin (mcyE/ndaF),UNKNOWN,FAM,NFQ-MGB,Undetermined,,,,,,false,"300,000.000",false,1,40,,37.798,0.498,-2.809,127.012,2.075,0.000
+9,A9,false,WE02S,Saxitoxin (SxtA),UNKNOWN,CALFL-RED,NFQ-MGB,Undetermined,,,,,,false,"400,000.000",false,1,40,,39.159,0.975,-3.350,98.829,1.941,0.000
+10,A10,false,WE04S,Cylindrospermopsin (cyrA),UNKNOWN,CALFL-ORNG,NFQ-MGB,Undetermined,,,,,,false,"125,000.000",false,1,40,,39.232,0.999,-3.381,97.612,1.723,0.000
+10,A10,false,WE04S,Microcystin/Nodularin (mcyE/ndaF),UNKNOWN,FAM,NFQ-MGB,Undetermined,,,,,,false,"300,000.000",false,1,40,,37.798,0.498,-2.809,127.012,0.000,0.000
+10,A10,false,WE04S,Saxitoxin (SxtA),UNKNOWN,CALFL-RED,NFQ-MGB,Undetermined,,,,,,false,"400,000.000",false,1,40,,39.159,0.975,-3.350,98.829,0.000,0.000
+11,A11,false,WE06S,Cylindrospermopsin (cyrA),UNKNOWN,CALFL-ORNG,NFQ-MGB,Undetermined,,,,,,false,"125,000.000",false,1,40,,39.232,0.999,-3.381,97.612,1.384,0.000
+11,A11,false,WE06S,Microcystin/Nodularin (mcyE/ndaF),UNKNOWN,FAM,NFQ-MGB,Undetermined,,,,,,false,"300,000.000",false,1,40,,37.798,0.498,-2.809,127.012,2.368,0.000
+11,A11,false,WE06S,Saxitoxin (SxtA),UNKNOWN,CALFL-RED,NFQ-MGB,Undetermined,,,,,,false,"400,000.000",false,1,40,,39.159,0.975,-3.350,98.829,2.030,0.000
+12,A12,false,WE08S,Cylindrospermopsin (cyrA),UNKNOWN,CALFL-ORNG,NFQ-MGB,Undetermined,,,,,,false,"125,000.000",false,1,40,,39.232,0.999,-3.381,97.612,0.000,0.000
+12,A12,false,WE08S,Microcystin/Nodularin (mcyE/ndaF),UNKNOWN,FAM,NFQ-MGB,Undetermined,,,,,,false,"300,000.000",false,1,40,,37.798,0.498,-2.809,127.012,2.471,0.000
+12,A12,false,WE08S,Saxitoxin (SxtA),UNKNOWN,CALFL-RED,NFQ-MGB,Undetermined,,,,,,false,"400,000.000",false,1,40,,39.159,0.975,-3.350,98.829,2.088,0.000
+13,B1,false,NA015,Internal Amplification Control (IAC),UNKNOWN,CALFL-ORNG,NFQ-MGB,29.868,29.973,0.148,,,,false,"100,000.000",false,1,40,,,,,,2.757,0.996
+13,B1,false,NA015,Total Cyanobacteria (16S rRNA gene),STANDARD,FAM,NFQ-MGB,21.636,21.670,0.049,"100,000.000",,,false,"250,000.000",false,1,40,,40.628,0.996,-3.735,85.229,3.098,0.717
+14,B2,false,NA015,Internal Amplification Control (IAC),UNKNOWN,CALFL-ORNG,NFQ-MGB,30.077,29.973,0.148,,,,false,"100,000.000",false,1,40,,,,,,2.757,0.987
+14,B2,false,NA015,Total Cyanobacteria (16S rRNA gene),STANDARD,FAM,NFQ-MGB,21.705,21.670,0.049,"100,000.000",,,false,"250,000.000",false,1,40,,40.628,0.996,-3.735,85.229,3.097,0.730
+15,B3,false,WE09S,Internal Amplification Control (IAC),UNKNOWN,CALFL-ORNG,NFQ-MGB,29.669,29.669,,,,,false,"100,000.000",false,1,40,,,,,,2.701,0.974
+15,B3,false,WE09S,Total Cyanobacteria (16S rRNA gene),UNKNOWN,FAM,NFQ-MGB,19.226,19.226,,"536,436.000","536,436.000",,false,"250,000.000",false,1,40,,40.628,0.996,-3.735,85.229,3.057,0.641
+16,B4,false,WE12S,Internal Amplification Control (IAC),UNKNOWN,CALFL-ORNG,NFQ-MGB,29.446,29.446,,,,,false,"100,000.000",false,1,40,,,,,,2.768,0.990
+16,B4,false,WE12S,Total Cyanobacteria (16S rRNA gene),UNKNOWN,FAM,NFQ-MGB,23.964,23.964,,"28,904.752","28,904.752",,false,"250,000.000",false,1,40,,40.628,0.996,-3.735,85.229,3.085,0.723
+17,B5,false,WE13S,Internal Amplification Control (IAC),UNKNOWN,CALFL-ORNG,NFQ-MGB,29.297,29.297,,,,,false,"100,000.000",false,1,40,,,,,,2.739,0.989
+17,B5,false,WE13S,Total Cyanobacteria (16S rRNA gene),UNKNOWN,FAM,NFQ-MGB,22.210,22.210,,"85,243.117","85,243.117",,false,"250,000.000",false,1,40,,40.628,0.996,-3.735,85.229,3.063,0.711
+18,B6,false,WE16S,Internal Amplification Control (IAC),UNKNOWN,CALFL-ORNG,NFQ-MGB,29.332,29.332,,,,,false,"100,000.000",false,1,40,,,,,,2.776,0.989
+18,B6,false,WE16S,Total Cyanobacteria (16S rRNA gene),UNKNOWN,FAM,NFQ-MGB,23.057,23.057,,"50,574.043","50,574.043",,false,"250,000.000",false,1,40,,40.628,0.996,-3.735,85.229,3.098,0.732
+19,B7,false,NA015,Cylindrospermopsin (cyrA),STANDARD,CALFL-ORNG,NFQ-MGB,Undetermined,22.213,,"100,000.000",,,false,"125,000.000",false,1,40,,39.232,0.999,-3.381,97.612,2.356,0.000
+19,B7,false,NA015,Microcystin/Nodularin (mcyE/ndaF),STANDARD,FAM,NFQ-MGB,35.361,28.484,9.725,"100,000.000",,,false,"300,000.000",false,1,40,,37.798,0.498,-2.809,127.012,2.565,0.329
+19,B7,false,NA015,Saxitoxin (SxtA),STANDARD,CALFL-RED,NFQ-MGB,24.594,23.309,1.816,"100,000.000",,,false,"400,000.000",false,1,40,,39.159,0.975,-3.350,98.829,2.796,0.392
+20,B8,false,NA015,Cylindrospermopsin (cyrA),STANDARD,CALFL-ORNG,NFQ-MGB,22.213,22.213,,"100,000.000",,,false,"125,000.000",false,1,40,,39.232,0.999,-3.381,97.612,2.934,0.987
+20,B8,false,NA015,Microcystin/Nodularin (mcyE/ndaF),STANDARD,FAM,NFQ-MGB,21.607,28.484,9.725,"100,000.000",,,false,"300,000.000",false,1,40,,37.798,0.498,-2.809,127.012,3.176,0.866
+20,B8,false,NA015,Saxitoxin (SxtA),STANDARD,CALFL-RED,NFQ-MGB,22.025,23.309,1.816,"100,000.000",,,false,"400,000.000",false,1,40,,39.159,0.975,-3.350,98.829,3.159,0.827
+21,B9,false,WE09S,Cylindrospermopsin (cyrA),UNKNOWN,CALFL-ORNG,NFQ-MGB,Undetermined,,,,,,false,"125,000.000",false,1,40,,39.232,0.999,-3.381,97.612,2.023,0.000
+21,B9,false,WE09S,Microcystin/Nodularin (mcyE/ndaF),UNKNOWN,FAM,NFQ-MGB,Undetermined,,,,,,false,"300,000.000",false,1,40,,37.798,0.498,-2.809,127.012,2.374,0.000
+21,B9,false,WE09S,Saxitoxin (SxtA),UNKNOWN,CALFL-RED,NFQ-MGB,Undetermined,,,,,,false,"400,000.000",false,1,40,,39.159,0.975,-3.350,98.829,0.000,0.000
+22,B10,false,WE12S,Cylindrospermopsin (cyrA),UNKNOWN,CALFL-ORNG,NFQ-MGB,Undetermined,,,,,,false,"125,000.000",false,1,40,,39.232,0.999,-3.381,97.612,1.731,0.000
+22,B10,false,WE12S,Microcystin/Nodularin (mcyE/ndaF),UNKNOWN,FAM,NFQ-MGB,Undetermined,,,,,,false,"300,000.000",false,1,40,,37.798,0.498,-2.809,127.012,0.000,0.000
+22,B10,false,WE12S,Saxitoxin (SxtA),UNKNOWN,CALFL-RED,NFQ-MGB,Undetermined,,,,,,false,"400,000.000",false,1,40,,39.159,0.975,-3.350,98.829,2.019,0.000
+23,B11,false,WE13S,Cylindrospermopsin (cyrA),UNKNOWN,CALFL-ORNG,NFQ-MGB,Undetermined,,,,,,false,"125,000.000",false,1,40,,39.232,0.999,-3.381,97.612,1.813,0.000
+23,B11,false,WE13S,Microcystin/Nodularin (mcyE/ndaF),UNKNOWN,FAM,NFQ-MGB,Undetermined,,,,,,false,"300,000.000",false,1,40,,37.798,0.498,-2.809,127.012,1.763,0.000
+23,B11,false,WE13S,Saxitoxin (SxtA),UNKNOWN,CALFL-RED,NFQ-MGB,Undetermined,,,,,,false,"400,000.000",false,1,40,,39.159,0.975,-3.350,98.829,2.129,0.000
+24,B12,false,WE16S,Cylindrospermopsin (cyrA),UNKNOWN,CALFL-ORNG,NFQ-MGB,Undetermined,,,,,,false,"125,000.000",false,1,40,,39.232,0.999,-3.381,97.612,0.000,0.000
+24,B12,false,WE16S,Microcystin/Nodularin (mcyE/ndaF),UNKNOWN,FAM,NFQ-MGB,Undetermined,,,,,,false,"300,000.000",false,1,40,,37.798,0.498,-2.809,127.012,2.131,0.000
+24,B12,false,WE16S,Saxitoxin (SxtA),UNKNOWN,CALFL-RED,NFQ-MGB,Undetermined,,,,,,false,"400,000.000",false,1,40,,39.159,0.975,-3.350,98.829,2.098,0.000
+25,C1,false,NA014,Internal Amplification Control (IAC),UNKNOWN,CALFL-ORNG,NFQ-MGB,30.595,30.433,0.228,,,,false,"100,000.000",false,1,40,,,,,,2.737,0.988
+25,C1,false,NA014,Total Cyanobacteria (16S rRNA gene),STANDARD,FAM,NFQ-MGB,25.379,25.477,0.139,"10,000.000",,,false,"250,000.000",false,1,40,,40.628,0.996,-3.735,85.229,3.050,0.841
+26,C2,false,NA014,Internal Amplification Control (IAC),UNKNOWN,CALFL-ORNG,NFQ-MGB,30.272,30.433,0.228,,,,false,"100,000.000",false,1,40,,,,,,2.730,0.983
+26,C2,false,NA014,Total Cyanobacteria (16S rRNA gene),STANDARD,FAM,NFQ-MGB,25.575,25.477,0.139,"10,000.000",,,false,"250,000.000",false,1,40,,40.628,0.996,-3.735,85.229,3.036,0.837
+31,C7,false,NA014,Cylindrospermopsin (cyrA),STANDARD,CALFL-ORNG,NFQ-MGB,25.540,25.564,0.033,"10,000.000",,,false,"125,000.000",false,1,40,,39.232,0.999,-3.381,97.612,2.934,0.991
+31,C7,false,NA014,Microcystin/Nodularin (mcyE/ndaF),STANDARD,FAM,NFQ-MGB,25.035,24.995,0.057,"10,000.000",,,false,"300,000.000",false,1,40,,37.798,0.498,-2.809,127.012,3.169,0.897
+31,C7,false,NA014,Saxitoxin (SxtA),STANDARD,CALFL-RED,NFQ-MGB,25.408,25.398,0.014,"10,000.000",,,false,"400,000.000",false,1,40,,39.159,0.975,-3.350,98.829,3.165,0.840
+32,C8,false,NA014,Cylindrospermopsin (cyrA),STANDARD,CALFL-ORNG,NFQ-MGB,25.587,25.564,0.033,"10,000.000",,,false,"125,000.000",false,1,40,,39.232,0.999,-3.381,97.612,2.926,0.991
+32,C8,false,NA014,Microcystin/Nodularin (mcyE/ndaF),STANDARD,FAM,NFQ-MGB,24.955,24.995,0.057,"10,000.000",,,false,"300,000.000",false,1,40,,37.798,0.498,-2.809,127.012,3.173,0.868
+32,C8,false,NA014,Saxitoxin (SxtA),STANDARD,CALFL-RED,NFQ-MGB,25.388,25.398,0.014,"10,000.000",,,false,"400,000.000",false,1,40,,39.159,0.975,-3.350,98.829,3.162,0.838
+37,D1,false,NA013,Internal Amplification Control (IAC),UNKNOWN,CALFL-ORNG,NFQ-MGB,31.025,30.662,0.514,,,,false,"100,000.000",false,1,40,,,,,,2.726,0.979
+37,D1,false,NA013,Total Cyanobacteria (16S rRNA gene),STANDARD,FAM,NFQ-MGB,29.618,29.308,0.439,"1,000.000",,,false,"250,000.000",false,1,40,,40.628,0.996,-3.735,85.229,2.992,0.868
+38,D2,false,NA013,Internal Amplification Control (IAC),UNKNOWN,CALFL-ORNG,NFQ-MGB,30.298,30.662,0.514,,,,false,"100,000.000",false,1,40,,,,,,2.783,0.986
+38,D2,false,NA013,Total Cyanobacteria (16S rRNA gene),STANDARD,FAM,NFQ-MGB,28.998,29.308,0.439,"1,000.000",,,false,"250,000.000",false,1,40,,40.628,0.996,-3.735,85.229,3.025,0.764
+43,D7,false,NA013,Cylindrospermopsin (cyrA),STANDARD,CALFL-ORNG,NFQ-MGB,29.237,29.240,0.003,"1,000.000",,,false,"125,000.000",false,1,40,,39.232,0.999,-3.381,97.612,2.888,0.986
+43,D7,false,NA013,Microcystin/Nodularin (mcyE/ndaF),STANDARD,FAM,NFQ-MGB,28.676,28.723,0.067,"1,000.000",,,false,"300,000.000",false,1,40,,37.798,0.498,-2.809,127.012,3.129,0.924
+43,D7,false,NA013,Saxitoxin (SxtA),STANDARD,CALFL-RED,NFQ-MGB,29.075,29.040,0.050,"1,000.000",,,false,"400,000.000",false,1,40,,39.159,0.975,-3.350,98.829,3.111,0.928
+44,D8,false,NA013,Cylindrospermopsin (cyrA),STANDARD,CALFL-ORNG,NFQ-MGB,29.242,29.240,0.003,"1,000.000",,,false,"125,000.000",false,1,40,,39.232,0.999,-3.381,97.612,2.901,0.986
+44,D8,false,NA013,Microcystin/Nodularin (mcyE/ndaF),STANDARD,FAM,NFQ-MGB,28.770,28.723,0.067,"1,000.000",,,false,"300,000.000",false,1,40,,37.798,0.498,-2.809,127.012,3.143,0.905
+44,D8,false,NA013,Saxitoxin (SxtA),STANDARD,CALFL-RED,NFQ-MGB,29.005,29.040,0.050,"1,000.000",,,false,"400,000.000",false,1,40,,39.159,0.975,-3.350,98.829,3.128,0.886
+49,E1,false,NA012,Internal Amplification Control (IAC),UNKNOWN,CALFL-ORNG,NFQ-MGB,30.487,30.500,0.018,,,,false,"100,000.000",false,1,40,,,,,,2.790,0.986
+49,E1,false,NA012,Total Cyanobacteria (16S rRNA gene),STANDARD,FAM,NFQ-MGB,33.731,33.416,0.445,100.000,,,false,"250,000.000",false,1,40,,40.628,0.996,-3.735,85.229,2.964,0.542
+50,E2,false,NA012,Internal Amplification Control (IAC),UNKNOWN,CALFL-ORNG,NFQ-MGB,30.513,30.500,0.018,,,,false,"100,000.000",false,1,40,,,,,,2.796,0.987
+50,E2,false,NA012,Total Cyanobacteria (16S rRNA gene),STANDARD,FAM,NFQ-MGB,33.101,33.416,0.445,100.000,,,false,"250,000.000",false,1,40,,40.628,0.996,-3.735,85.229,2.984,0.627
+55,E7,false,NA012,Cylindrospermopsin (cyrA),STANDARD,CALFL-ORNG,NFQ-MGB,32.218,32.446,0.323,100.000,,,false,"125,000.000",false,1,40,,39.232,0.999,-3.381,97.612,2.840,0.976
+55,E7,false,NA012,Microcystin/Nodularin (mcyE/ndaF),STANDARD,FAM,NFQ-MGB,32.046,32.269,0.316,100.000,,,false,"300,000.000",false,1,40,,37.798,0.498,-2.809,127.012,3.055,0.952
+55,E7,false,NA012,Saxitoxin (SxtA),STANDARD,CALFL-RED,NFQ-MGB,32.232,32.463,0.326,100.000,,,false,"400,000.000",false,1,40,,39.159,0.975,-3.350,98.829,3.067,0.925
+56,E8,false,NA012,Cylindrospermopsin (cyrA),STANDARD,CALFL-ORNG,NFQ-MGB,32.675,32.446,0.323,100.000,,,false,"125,000.000",false,1,40,,39.232,0.999,-3.381,97.612,2.822,0.969
+56,E8,false,NA012,Microcystin/Nodularin (mcyE/ndaF),STANDARD,FAM,NFQ-MGB,32.493,32.269,0.316,100.000,,,false,"300,000.000",false,1,40,,37.798,0.498,-2.809,127.012,3.032,0.931
+56,E8,false,NA012,Saxitoxin (SxtA),STANDARD,CALFL-RED,NFQ-MGB,32.693,32.463,0.326,100.000,,,false,"400,000.000",false,1,40,,39.159,0.975,-3.350,98.829,3.019,0.940
+61,F1,false,NTC,Internal Amplification Control (IAC),UNKNOWN,CALFL-ORNG,NFQ-MGB,30.932,30.735,0.279,,,,false,"100,000.000",false,1,40,,,,,,2.782,0.986
+61,F1,false,NTC,Total Cyanobacteria (16S rRNA gene),NTC,FAM,NFQ-MGB,Undetermined,,,,,,false,"250,000.000",false,1,40,,40.628,0.996,-3.735,85.229,2.039,0.000
+62,F2,false,NTC,Internal Amplification Control (IAC),UNKNOWN,CALFL-ORNG,NFQ-MGB,30.538,30.735,0.279,,,,false,"100,000.000",false,1,40,,,,,,2.803,0.988
+62,F2,false,NTC,Total Cyanobacteria (16S rRNA gene),NTC,FAM,NFQ-MGB,Undetermined,,,,,,false,"250,000.000",false,1,40,,40.628,0.996,-3.735,85.229,0.000,0.000
+67,F7,false,NTC,Cylindrospermopsin (cyrA),NTC,CALFL-ORNG,NFQ-MGB,Undetermined,,,,,,false,"125,000.000",false,1,40,,39.232,0.999,-3.381,97.612,0.000,0.000
+67,F7,false,NTC,Microcystin/Nodularin (mcyE/ndaF),NTC,FAM,NFQ-MGB,Undetermined,,,,,,false,"300,000.000",false,1,40,,37.798,0.498,-2.809,127.012,0.000,0.000
+67,F7,false,NTC,Saxitoxin (SxtA),NTC,CALFL-RED,NFQ-MGB,Undetermined,,,,,,false,"400,000.000",false,1,40,,39.159,0.975,-3.350,98.829,0.000,0.000
+68,F8,false,NTC,Cylindrospermopsin (cyrA),NTC,CALFL-ORNG,NFQ-MGB,Undetermined,,,,,,false,"125,000.000",false,1,40,,39.232,0.999,-3.381,97.612,0.000,0.000
+68,F8,false,NTC,Microcystin/Nodularin (mcyE/ndaF),NTC,FAM,NFQ-MGB,Undetermined,,,,,,false,"300,000.000",false,1,40,,37.798,0.498,-2.809,127.012,1.922,0.000
+68,F8,false,NTC,Saxitoxin (SxtA),NTC,CALFL-RED,NFQ-MGB,Undetermined,,,,,,false,"400,000.000",false,1,40,,39.159,0.975,-3.350,98.829,2.138,0.000
