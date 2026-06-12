@@ -183,7 +183,7 @@ std_curve_plot_total <- ggplot(std_curve_total_master,
   labs(x = "Log Starting Quantity (Copies Per Reaction)", y = "Ct") +
   scale_y_continuous(limits=c(0, 38), breaks = c(0,5,10,15,20,25,30,35))
 
-ggsave(std_curve_plot_total, height = 5, width = 5, path = "output/total", filename = "standard_curve_total.pdf", device = "pdf")
+ggsave(std_curve_plot_total, height = 5, width = 5, path = "output/total", filename = "standard_curve_total.pdf", device = "pdf", create_dir = TRUE)
 
 #Calculate and test r-squared of total std curve
 std_curve_total_r2 <- tryCatch(summary(lm(CT ~ Log_starting_quantity_machine, data = std_curve_total_master))$r.squared, error=function(e){"NA"})
@@ -501,7 +501,7 @@ if (!dir.exists("output/mcye")) {
   dir.create("output/mcye", recursive = TRUE)
 }
 
-ggsave(std_curve_plot_toxin, height = 5, width = 5, path = "output/mcye", filename = "standard_curve_mcye.pdf", device = "pdf")
+ggsave(std_curve_plot_toxin, height = 5, width = 5, path = "output/mcye", filename = "standard_curve_mcye.pdf", device = "pdf", create_dir = TRUE)
 
 #Calculate and test r-squared of toxin std curve
 std_curve_toxin_r2 <- tryCatch(summary(lm(CT ~ Log_starting_quantity_machine, data = std_curve_toxin_master))$r.squared, error=function(e){"NA"})
@@ -815,7 +815,7 @@ if (!dir.exists("output/sxta")) {
   dir.create("output/sxta", recursive = TRUE)
 }
 
-ggsave(std_curve_plot_sxta, height = 5, width = 5, path = "output/sxta", filename = "standard_curve_sxta.pdf", device = "pdf")
+ggsave(std_curve_plot_sxta, height = 5, width = 5, path = "output/sxta", filename = "standard_curve_sxta.pdf", device = "pdf", create_dir = TRUE)
 
 #Calculate and test r-squared of sxta std curve
 std_curve_sxta_r2 <- tryCatch(summary(lm(CT ~ Log_starting_quantity_machine, data = std_curve_sxta_master))$r.squared, error=function(e){"NA"})
@@ -1390,6 +1390,8 @@ write.table(
 #      - fixed sxtA Pass/Fail results, which referenced mcyE curve
 
 #2.2.0 - added test 10 and 11 to each assay
+
+#2.2.1 - added create_dir = TRUE to ggsave to prevent initial errors when running code off github
 
 ###END###
 
