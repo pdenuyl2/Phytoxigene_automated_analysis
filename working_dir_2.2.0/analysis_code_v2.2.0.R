@@ -370,6 +370,7 @@ test7_result <- test7_result[-c(0,8:9)]
 
 write.csv(
   test7_result, file='output/total/tests/test7_result_total.csv', row.names=FALSE)
+
 #######################
 # SAMPLE CALCULATION #
 #######################
@@ -406,9 +407,24 @@ tryCatch(for (i in 1:length(run_file_total_unknown$CT)) {
 tryCatch(test8_9_result <- run_file_total_unknown %>% select(Well_Position, Sample_Name, Target_Name, Task, CT, Ct_Mean, Ct_SD, CPR, CPR_mean, Stdev_CPR, RSD, test8, test9), error=function(e){"NA"})
 
 tryCatch(write.csv(
-  test8_9_result, file='output/total/Tests/test8_9_result_total.csv', row.names=FALSE), error=function(e){"NA"})
+  test8_9_result, file='output/total/tests/test8_9_result_total.csv', row.names=FALSE), error=function(e){"NA"})
 
-  }
+}
+
+#Limit of detection test (Test 10)
+tryCatch(for (i in 1:length(run_file_total_unknown$CPR)) {
+  run_file_total_unknown$test10[i] <- ifelse(as.numeric(run_file_total_unknown$CPR[i])>=as.numeric(45), ".","BDL")
+}, error=function(e){"NA"})
+
+#Limit of quantification test (Test 11)
+tryCatch(for (i in 1:length(run_file_total_unknown$CPR)) {
+  run_file_total_unknown$test11[i] <- ifelse(as.numeric(run_file_total_unknown$CPR[i])>=as.numeric(100), ".","BQL")
+}, error=function(e){"NA"})
+tryCatch(test10_11_result <- run_file_total_unknown %>% select(Well_Position, Sample_Name, Target_Name, Task, CT, Ct_Mean, Ct_SD, CPR, CPR_mean, Stdev_CPR, RSD, test10, test11), error=function(e){"NA"})
+
+tryCatch(write.csv(
+  test10_11_result, file='output/total/tests/test10_11_result_total.csv', row.names=FALSE), error=function(e){"NA"})
+
 ######################################################################
 #Processing Stream - Total Cyanobacteria 16S rRNA gene Target - End#
 ######################################################################
@@ -694,7 +710,34 @@ tryCatch(for (i in 1:length(run_file_toxin_unknown$CT)) {
 tryCatch(test8_9_result_toxin <- run_file_toxin_unknown %>% select(Well_Position, Sample_Name, Target_Name, Task, CT, Ct_Mean, Ct_SD, CPR, CPR_mean, Stdev_CPR, RSD, test8, test9), error=function(e){"NA"})
 
 tryCatch(write.csv(
-  test8_9_result_toxin, file='output/mcye/Tests/test8_9_result_mcye.csv', row.names=FALSE), error=function(e){"NA"})
+  test8_9_result_toxin, file='output/mcye/tests/test8_9_result_mcye.csv', row.names=FALSE), error=function(e){"NA"})
+
+##NNEED TO ADD THE FOLLOWING DATA!  ALSO FIX FOR TOTAL AND SXTA. THEN INCLUDE IN SUMMARY.
+#
+#
+#
+#
+#
+#
+#
+#
+#
+run_file_toxin_unknown
+run_file_toxin_unknown_undetermined
+
+#Limit of detection test (Test 10)
+tryCatch(for (i in 1:length(run_file_toxin_unknown$CPR)) {
+  run_file_toxin_unknown$test10[i] <- ifelse(as.numeric(run_file_toxin_unknown$CPR[i])>=as.numeric(45), ".","BDL")
+}, error=function(e){"NA"})
+
+#Limit of quantification test (Test 11)
+tryCatch(for (i in 1:length(run_file_toxin_unknown$CPR)) {
+  run_file_toxin_unknown$test11[i] <- ifelse(as.numeric(run_file_toxin_unknown$CPR[i])>=as.numeric(100), ".","BQL")
+}, error=function(e){"NA"})
+tryCatch(test10_11_result <- run_file_toxin_unknown %>% select(Well_Position, Sample_Name, Target_Name, Task, CT, Ct_Mean, Ct_SD, CPR, CPR_mean, Stdev_CPR, RSD, test10, test11), error=function(e){"NA"})
+
+tryCatch(write.csv(
+  test10_11_result, file='output/mcye/tests/test10_11_result_mcye.csv', row.names=FALSE), error=function(e){"NA"})
 
 ######################################################################
 #Processing Stream - mcyE Toxin gene gene Target - End#
@@ -983,6 +1026,19 @@ tryCatch(test8_9_result_sxta <- run_file_sxta_unknown %>% select(Well_Position, 
 tryCatch(write.csv(
   test8_9_result_sxta, file='output/sxta/Tests/test8_9_result_sxta.csv', row.names=FALSE), error=function(e){"NA"})
 
+#Limit of detection test (Test 10)
+tryCatch(for (i in 1:length(run_file_sxta_unknown$CPR)) {
+  run_file_sxta_unknown$test10[i] <- ifelse(as.numeric(run_file_sxta_unknown$CPR[i])>=as.numeric(45), ".","BDL")
+}, error=function(e){"NA"})
+
+#Limit of quantification test (Test 11)
+tryCatch(for (i in 1:length(run_file_sxta_unknown$CPR)) {
+  run_file_sxta_unknown$test11[i] <- ifelse(as.numeric(run_file_sxta_unknown$CPR[i])>=as.numeric(100), ".","BQL")
+}, error=function(e){"NA"})
+tryCatch(test10_11_result <- run_file_sxta_unknown %>% select(Well_Position, Sample_Name, Target_Name, Task, CT, Ct_Mean, Ct_SD, CPR, CPR_mean, Stdev_CPR, RSD, test10, test11), error=function(e){"NA"})
+
+tryCatch(write.csv(
+  test10_11_result, file='output/sxta/tests/test10_11_result_sxta.csv', row.names=FALSE), error=function(e){"NA"})
 
 ######################################################################
 #Processing Stream - sxtA Toxin gene gene Target - End#
@@ -1067,31 +1123,45 @@ run_file_iac_stds_unknown_result_sxta <- "NA"
 run_file_iac_stds_unknown_test_summary_toxin <- rbind(run_file_iac_stds_unknown_test_header, run_file_iac_stds_unknown_result_toxin)
 run_file_iac_stds_unknown_test_summary_sxta <- rbind(run_file_iac_stds_unknown_test_header, run_file_iac_stds_unknown_result_sxta)
 
-#Results summary: test 8 and 9
-run_file_unknown_test_header <- c("test8", "test9")
+#Results summary: test 8, 9, 10, and 11
+run_file_unknown_test_header <- c("test8", "test9", "test10", "test11")
 
 #Change "NA" to "." for samples that are UNDETERMINED
 run_file_total_unknown$test8 <- gsub('NA', '.', run_file_total_unknown$test8)
 run_file_total_unknown$test9 <- gsub('NA', '.', run_file_total_unknown$test9)
+run_file_total_unknown$test10 <- gsub('NA', '.', run_file_total_unknown$test10)
+run_file_total_unknown$test11 <- gsub('NA', '.', run_file_total_unknown$test11)
 
 run_file_total_unknown_result <- c(ifelse(any(run_file_total_unknown$test8=="FAIL") == "TRUE", "FAIL", "."),
-                                   ifelse(any(run_file_total_unknown$test9=="FAIL") == "TRUE", "FAIL", "."))
+                                   ifelse(any(run_file_total_unknown$test9=="FAIL") == "TRUE", "FAIL", "."),
+                                   ifelse(any(run_file_total_unknown$test10=="BDL") == "TRUE", "BDL", "."),
+                                   ifelse(any(run_file_total_unknown$test11=="BQL") == "TRUE", "BQL", "."))
 
 run_file_total_unknown_test_summary <- rbind(run_file_unknown_test_header, run_file_total_unknown_result)
 
 #Change "NA" to "." for samples that are UNDETERMINED
 run_file_toxin_unknown$test8 <- gsub('NA', '.', run_file_toxin_unknown$test8)
 run_file_toxin_unknown$test9 <- gsub('NA', '.', run_file_toxin_unknown$test9)
+run_file_toxin_unknown$test10 <- gsub('NA', '.', run_file_toxin_unknown$test10)
+run_file_toxin_unknown$test11 <- gsub('NA', '.', run_file_toxin_unknown$test11)
+
 run_file_toxin_unknown_result <- c(ifelse(any(run_file_toxin_unknown$test8=="FAIL") == "TRUE", "FAIL", "."),
-                                   ifelse(any(run_file_toxin_unknown$test9=="FAIL") == "TRUE", "FAIL", "."))
+                                   ifelse(any(run_file_toxin_unknown$test9=="FAIL") == "TRUE", "FAIL", "."),
+                                   ifelse(any(run_file_toxin_unknown$test10=="BDL") == "TRUE", "BDL", "."),
+                                   ifelse(any(run_file_toxin_unknown$test11=="BQL") == "TRUE", "BQL", "."))
 
 run_file_toxin_unknown_test_summary <- rbind(run_file_unknown_test_header, run_file_toxin_unknown_result)
 
 #Change "NA" to "." for samples that are UNDETERMINED
 run_file_sxta_unknown$test8 <- gsub('NA', '.', run_file_sxta_unknown$test8)
 run_file_sxta_unknown$test9 <- gsub('NA', '.', run_file_sxta_unknown$test9)
+run_file_sxta_unknown$test10 <- gsub('NA', '.', run_file_sxta_unknown$test10)
+run_file_sxta_unknown$test11 <- gsub('NA', '.', run_file_sxta_unknown$test11)
+
 run_file_sxta_unknown_result <- c(ifelse(any(run_file_sxta_unknown$test8=="FAIL") == "TRUE", "FAIL", "."),
-                                   ifelse(any(run_file_sxta_unknown$test9=="FAIL") == "TRUE", "FAIL", "."))
+                                  ifelse(any(run_file_sxta_unknown$test9=="FAIL") == "TRUE", "FAIL", "."),
+                                  ifelse(any(run_file_sxta_unknown$test10=="BDL") == "TRUE", "BDL", "."),
+                                  ifelse(any(run_file_sxta_unknown$test11=="BQL") == "TRUE", "BQL", "."))
 
 run_file_sxta_unknown_test_summary <- rbind(run_file_unknown_test_header, run_file_sxta_unknown_result)
 
@@ -1120,36 +1190,35 @@ tryCatch(all_test_summary_sxta  <-cbind(std_curve_sxta_master_test_summary, run_
 summary_output <- data.frame(matrix(ncol = 1000, nrow = 1000))
 summary_output[is.na(summary_output)] <- ""
 
-#Print test 1-9 summary - Total Cyanobacteria
-tryCatch(summary_output[7:8,2:10] <- all_test_summary_total, error=function(e){"NA"})
+#Print test 1-11 summary - Total Cyanobacteria
+tryCatch(summary_output[7:8,2:12] <- all_test_summary_total, error=function(e){"NA"})
 summary_output[7,1]<- "Total Cyanobacteria Assay Test Results"
 
-#Add filler test 1-9 summary if Total Cyanobacteria Assay not used
-replacement_headers <- c("test1", "test2", "test3", "test4", "test5", "test6", "test7", "test8", "test9")
-ifelse(summary_output[7,2]=="", summary_output[7,2:10] <- replacement_headers, print("NA"))
-replacement_results <- c("NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA")
-ifelse(summary_output[8,2]=="", summary_output[8,2:10] <- replacement_results, print("NA"))
+#Add filler test 1-11 summary if Total Cyanobacteria Assay not used
+replacement_headers <- c("test1", "test2", "test3", "test4", "test5", "test6", "test7", "test8", "test9", "test10", "test11")
+ifelse(summary_output[7,2]=="", summary_output[7,2:12] <- replacement_headers, print("NA"))
+replacement_results <- c("NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA")
+ifelse(summary_output[8,2]=="", summary_output[8,2:12] <- replacement_results, print("NA"))
 
-#Print test 1-9 summary - mcyE Toxin Gene
-tryCatch(summary_output[10:11,2:10] <- all_test_summary_toxin, error=function(e){"NA"})
+#Print test 1-11 summary - mcyE Toxin Gene
+tryCatch(summary_output[10:11,2:12] <- all_test_summary_toxin, error=function(e){"NA"})
 summary_output[10,1] <- "mcyE Toxin Gene Assay Test Results"
 
-#Add filler test 1-9 summary if mcyE Toxin Gene not used
-replacement_headers <- c("test1", "test2", "test3", "test4", "test5", "test6", "test7", "test8", "test9")
-ifelse(summary_output[10,2]=="", summary_output[10,2:10] <- replacement_headers, print("NA"))
-replacement_results <- c("NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA")
-ifelse(summary_output[11,2]=="", summary_output[11,2:10] <- replacement_results, print("NA"))
+#Add filler test 1-11 summary if mcyE Toxin Gene not used
+replacement_headers <- c("test1", "test2", "test3", "test4", "test5", "test6", "test7", "test8", "test9", "test10", "test11")
+ifelse(summary_output[10,2]=="", summary_output[10,2:12] <- replacement_headers, print("NA"))
+replacement_results <- c("NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA")
+ifelse(summary_output[11,2]=="", summary_output[11,2:12] <- replacement_results, print("NA"))
 
-#START HERE
-#Print test 1-9 summary - sxtA Toxin Gene
-tryCatch(summary_output[13:14,2:10] <- all_test_summary_sxta, error=function(e){"NA"})
+#Print test 1-11 summary - sxtA Toxin Gene
+tryCatch(summary_output[13:14,2:12] <- all_test_summary_sxta, error=function(e){"NA"})
 summary_output[13,1] <- "sxtA Toxin Gene Assay Test Results"
 
-#Add filler test 1-9 summary if sxtA Toxin Gene not used
-replacement_headers <- c("test1", "test2", "test3", "test4", "test5", "test6", "test7", "test8", "test9")
-ifelse(summary_output[13,2]=="", summary_output[13,2:10] <- replacement_headers, print("NA"))
-replacement_results <- c("NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA")
-ifelse(summary_output[14,2]=="", summary_output[14,2:10] <- replacement_results, print("NA"))
+#Add filler test 1-11 summary if sxtA Toxin Gene not used
+replacement_headers <- c("test1", "test2", "test3", "test4", "test5", "test6", "test7", "test8", "test9", "test10", "test11")
+ifelse(summary_output[13,2]=="", summary_output[13,2:12] <- replacement_headers, print("NA"))
+replacement_results <- c("NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA")
+ifelse(summary_output[14,2]=="", summary_output[14,2:12] <- replacement_results, print("NA"))
 
 #Summary of run/machine data
 #Calibration expired?
@@ -1319,6 +1388,8 @@ write.table(
 
 #2.1.1 - added code to create the directory paths if they don't exist
 #      - fixed sxtA Pass/Fail results, which referenced mcyE curve
+
+#2.2.0 - added test 10 and 11 to each assay
 
 ###END###
 
